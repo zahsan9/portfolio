@@ -1810,13 +1810,6 @@
       <div class="feed" id="feed">
 
         <!-- About -->
-        <article class="pin" data-cat="misc" data-page="about" data-year="Now">
-          <div class="art art-paper ar-45">
-            <div class="pin-meta">ABOUT ME</div>
-            <h3 class="about-title" style="margin-top:auto;">Software<br>Engineer<br><em>&amp;</em> Designer.</h3>
-          </div>
-        </article>
-
         <!-- Metro case study -->
         <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
           <div class="art art-clay ar-45">
@@ -2101,6 +2094,7 @@
             <div class="ab-card-sub">CS + DS @ UW · Summer '26</div>
           </div>
         </div>
+        <div class="cs-wip" style="margin-top: 32px;"><span class="cs-label">In progress</span><p class="cs-wip-text">More coming soon.</p></div>
       `
     },
     metro: {
@@ -2109,7 +2103,7 @@
       title: 'Re-routing Metro for <em>blind commuters.</em>',
       lead: 'In 2025 I led a redesign of King County Metro\'s trip-planning flow with the Allen School Accessibility Lab. We shipped an iOS prototype to 800 beta riders.',
       facts: [['My role','Lead designer + engineer'],['Method','14 interviews · 3 rounds usability'],['Outcome','−42% trip-planning time, n=18'],['Year','2025']],
-      body: '<h3>What I made</h3><p>An iOS interface that re-thinks the trip-planning flow around <em>auditory landmarks</em> instead of map glyphs — a TTS-first information architecture, structured around the questions blind riders actually ask.</p>'
+      body: '<h3>What I made</h3><p>An iOS interface that re-thinks the trip-planning flow around <em>auditory landmarks</em> instead of map glyphs — a TTS-first information architecture, structured around the questions blind riders actually ask.</p><div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full case study in progress.</p></div>'
     },
     climate: {
       meta: 'Data Viz · Survey Analysis',
@@ -2593,6 +2587,7 @@
       const cat = srcEl?.dataset?.cat || 'misc';
       html += `<div class="fig" style="background:${FIG_BG[cat] || FIG_BG.misc};">[ figure / hero ]</div>`;
       if (p.body) html += `<div class="body">${p.body}</div>`;
+      if (!p.body) html += `<div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full writeup in progress.</p></div>`;
     }
     return html;
   }
