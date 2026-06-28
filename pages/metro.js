@@ -13,4 +13,8 @@ PAGES.metro.html = `
   <h3>What I made</h3>
   <p>An iOS interface that re-thinks the trip-planning flow around <em>auditory landmarks</em> instead of map glyphs — a TTS-first information architecture, structured around the questions blind riders actually ask.</p>
 </div>
+<div class="cs-wip">
+  <span class="cs-label">Coming soon</span>
+  <p class="cs-wip-text">Full case study in progress.</p>
+</div>
 `;

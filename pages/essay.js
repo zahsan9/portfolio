@@ -8,5 +8,8 @@ PAGES.essay.html = `
 </dl>
 <div class="fig" style="background: linear-gradient(135deg, var(--c-plum), oklch(0.30 0.08 320));">[ figure / hero ]</div>
 
-<!-- Add essay content below -->
+<div class="cs-wip">
+  <span class="cs-label">Coming soon</span>
+  <p class="cs-wip-text">Full essay in progress.</p>
+</div>
 `;

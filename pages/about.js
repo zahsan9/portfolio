@@ -47,4 +47,9 @@ PAGES.about.html = `
     <div><dt>Based</dt><dd>Seattle, WA</dd></div>
   </dl>
 </div>
+
+<div class="cs-wip">
+  <span class="cs-label">In progress</span>
+  <p class="cs-wip-text">More coming soon.</p>
+</div>
 `;

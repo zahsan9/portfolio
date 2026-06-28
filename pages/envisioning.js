@@ -8,5 +8,8 @@ PAGES.envisioning.html = `
 </dl>
 <div class="fig" style="background: linear-gradient(135deg, var(--c-blue), oklch(0.40 0.08 250));">[ figure / hero ]</div>
 
-<!-- Add notes / quotes below -->
+<div class="cs-wip">
+  <span class="cs-label">Coming soon</span>
+  <p class="cs-wip-text">Notes in progress.</p>
+</div>
 `;

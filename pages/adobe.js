@@ -9,5 +9,8 @@ PAGES.adobe.html = `
 </dl>
 <div class="fig" style="background: linear-gradient(135deg, var(--c-yellow), oklch(0.78 0.10 80));">[ figure / hero ]</div>
 
-<!-- Add case study content below -->
+<div class="cs-wip">
+  <span class="cs-label">Coming soon</span>
+  <p class="cs-wip-text">Full case study in progress.</p>
+</div>
 `;
