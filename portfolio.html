@@ -540,29 +540,28 @@
     --card-gap: 36px;
     width: min(980px, 100% - 72px);
     margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap);
-    align-items: start;
+    column-count: 3; column-gap: var(--card-gap);
     padding: 8px 0 88px;
   }
   .app.sheet-open .feed {
     width: calc(25vw - 56px + var(--open-column-gutter));
     max-width: 327px;
     margin: 0;
-    grid-template-columns: 1fr;
+    column-count: 1;
     padding: calc(var(--chrome-size) + 24px) 0 80px var(--open-column-gutter);
     transform: none;
   }
   @media (max-width: 1400px) { .feed { --card-gap: 32px; } }
   @media (max-width: 1000px) {
-    .feed { --card-gap: 28px; grid-template-columns: repeat(2, 1fr); }
+    .feed { --card-gap: 28px; column-count: 2; }
   }
-  @media (max-width: 600px)  { .feed { grid-template-columns: 1fr; } }
+  @media (max-width: 600px)  { .feed { column-count: 1; } }
   @media (max-width: 1400px) { .app.sheet-open .feed { width: min(calc(33.333vw - 140px), 327px); } }
   @media (max-width: 1000px) { .app.sheet-open .feed { width: calc(50vw - 78px); } }
   @media (max-width: 600px)  { .app.sheet-open .feed { width: calc(100vw - 16px); } }
 
   .pin {
-    cursor: pointer;
+    break-inside: avoid; margin-bottom: var(--card-gap); cursor: pointer;
     position: relative; padding-top: 0; padding-bottom: 0;
     transition:
       padding-top 260ms var(--ease-out),
@@ -1794,7 +1793,7 @@
         </div>
         <h1 id="nameTitle">Zainab <em>Ahsan</em></h1>
         <p class="bio">Co-Founder @ WIIRED Studio | CS + Data Science @ UW<br>I design and ship human-centered software systems</p>
-        <div class="meta">Seattle, WA <span class="meta-sep">·</span> <span id="metaBoardCount"></span> Boards, <span id="metaPinCount"></span> Pins</div>
+        <div class="meta">Seattle, WA <span class="meta-sep">·</span> 5 Boards, 11 Pins</div>
       </div>
 
       <nav class="tabs" aria-label="Filter work">
@@ -1809,31 +1808,6 @@
       </nav>
 
       <div class="feed" id="feed">
-
-        <!-- About -->
-        <!-- Edmonds survey analysis -->
-        <article class="pin" data-cat="viz" data-page="climate" data-year="2026">
-          <div class="art art-yellow ar-45">
-            <div class="pin-meta">Case Study</div>
-            <h3>22% neutral.</h3>
-          </div>
-        </article>
-
-        <!-- WIIRED Studio -->
-        <article class="pin" data-cat="studio" data-page="wiired" data-year="2026">
-          <div class="art art-charcoal ar-45">
-            <div class="pin-meta">Case Study</div>
-            <h3 style="margin-top: auto;">WIIRED<br><em style="font-style:italic; color:var(--c-blue);">Studio.</em></h3>
-          </div>
-        </article>
-
-        <!-- Metro stat -->
-        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
-          <div class="art art-blue ar-45">
-            <div style="font-family:var(--serif);font-size:80px;line-height:1;margin-top:auto;letter-spacing:-0.03em;">−42<span style="font-size:36px;">%</span></div>
-            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Trip-planning time, blind riders</div>
-          </div>
-        </article>
 
         <!-- Metro case study -->
         <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
@@ -1851,6 +1825,22 @@
           </div>
         </article>
 
+        <!-- Edmonds survey analysis -->
+        <article class="pin" data-cat="viz" data-page="climate" data-year="2026">
+          <div class="art art-yellow ar-45">
+            <div class="pin-meta">Case Study</div>
+            <h3>22% neutral.</h3>
+          </div>
+        </article>
+
+        <!-- WIIRED Studio -->
+        <article class="pin" data-cat="studio" data-page="wiired" data-year="2026">
+          <div class="art art-charcoal ar-45">
+            <div class="pin-meta">Case Study</div>
+            <h3 style="margin-top: auto;">WIIRED<br><em style="font-style:italic; color:var(--c-blue);">Studio.</em></h3>
+          </div>
+        </article>
+
         <!-- Spotify -->
         <article class="pin" data-cat="viz" data-page="spotify" data-year="2019-26">
           <div class="art art-radial ar-45">
@@ -1862,6 +1852,14 @@
         <article class="pin" data-cat="misc" data-page="daily" data-year="Ongoing">
           <div class="art art-paper ar-1">
             <h3 style="font-size:28px;">Daily type<br>&amp; motion.</h3>
+          </div>
+        </article>
+
+        <!-- Metro stat -->
+        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
+          <div class="art art-blue ar-45">
+            <div style="font-family:var(--serif);font-size:80px;line-height:1;margin-top:auto;letter-spacing:-0.03em;">−42<span style="font-size:36px;">%</span></div>
+            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Trip-planning time, blind riders</div>
           </div>
         </article>
 
@@ -2784,10 +2782,6 @@
   const feed = document.getElementById('feed');
   const feedEmpty = document.getElementById('feedEmpty');
   const pins = [...feed.querySelectorAll('.pin')];
-  const boardCount = document.querySelectorAll('.tab:not([data-filter="all"])').length;
-  const pinCount = pins.length;
-  document.getElementById('metaBoardCount').textContent = boardCount;
-  document.getElementById('metaPinCount').textContent = pinCount;
 
   const CAT_LABELS = {
     ux: 'UI / UX',
