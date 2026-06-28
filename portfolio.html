@@ -1810,22 +1810,6 @@
       <div class="feed" id="feed">
 
         <!-- About -->
-        <!-- Metro case study -->
-        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
-          <div class="art art-clay ar-45">
-            <div class="pin-meta">Case Study</div>
-            <h3>Re-routing Metro for blind commuters.</h3>
-          </div>
-        </article>
-
-        <!-- Adobe internship -->
-        <article class="pin" data-cat="swe" data-page="adobe" data-year="2025">
-          <div class="art art-sage ar-45">
-            <div class="pin-meta">Case Study</div>
-            <h3>Adobe<br>Express.</h3>
-          </div>
-        </article>
-
         <!-- Edmonds survey analysis -->
         <article class="pin" data-cat="viz" data-page="climate" data-year="2026">
           <div class="art art-yellow ar-45">
@@ -1842,6 +1826,30 @@
           </div>
         </article>
 
+        <!-- Metro stat -->
+        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
+          <div class="art art-blue ar-45">
+            <div style="font-family:var(--serif);font-size:80px;line-height:1;margin-top:auto;letter-spacing:-0.03em;">−42<span style="font-size:36px;">%</span></div>
+            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Trip-planning time, blind riders</div>
+          </div>
+        </article>
+
+        <!-- Metro case study -->
+        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
+          <div class="art art-clay ar-45">
+            <div class="pin-meta">Case Study</div>
+            <h3>Re-routing Metro for blind commuters.</h3>
+          </div>
+        </article>
+
+        <!-- Adobe internship -->
+        <article class="pin" data-cat="swe" data-page="adobe" data-year="2025">
+          <div class="art art-sage ar-45">
+            <div class="pin-meta">Case Study</div>
+            <h3>Adobe<br>Express.</h3>
+          </div>
+        </article>
+
         <!-- Spotify -->
         <article class="pin" data-cat="viz" data-page="spotify" data-year="2019-26">
           <div class="art art-radial ar-45">
@@ -1853,14 +1861,6 @@
         <article class="pin" data-cat="misc" data-page="daily" data-year="Ongoing">
           <div class="art art-paper ar-1">
             <h3 style="font-size:28px;">Daily type<br>&amp; motion.</h3>
-          </div>
-        </article>
-
-        <!-- Metro stat -->
-        <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
-          <div class="art art-blue ar-45">
-            <div style="font-family:var(--serif);font-size:80px;line-height:1;margin-top:auto;letter-spacing:-0.03em;">−42<span style="font-size:36px;">%</span></div>
-            <div style="font-size:12px;opacity:0.85;margin-top:4px;">Trip-planning time, blind riders</div>
           </div>
         </article>
 
@@ -2060,6 +2060,7 @@
       meta: 'About',
       eyebrow: '',
       custom: `
+        <div class="cs-wip"><span class="cs-label">In progress</span><p class="cs-wip-text">More coming soon.</p></div>
         <div class="ab-bento" style="margin: 28px 0 0; max-width: none;">
           <div class="ab-bento-card ab-bento-1 ab-bento-photo">
             <img src="profile.jpg" alt="Zainab Ahsan">
@@ -2094,7 +2095,6 @@
             <div class="ab-card-sub">CS + DS @ UW · Summer '26</div>
           </div>
         </div>
-        <div class="cs-wip" style="margin-top: 32px;"><span class="cs-label">In progress</span><p class="cs-wip-text">More coming soon.</p></div>
       `
     },
     metro: {
@@ -2103,7 +2103,7 @@
       title: 'Re-routing Metro for <em>blind commuters.</em>',
       lead: 'In 2025 I led a redesign of King County Metro\'s trip-planning flow with the Allen School Accessibility Lab. We shipped an iOS prototype to 800 beta riders.',
       facts: [['My role','Lead designer + engineer'],['Method','14 interviews · 3 rounds usability'],['Outcome','−42% trip-planning time, n=18'],['Year','2025']],
-      body: '<h3>What I made</h3><p>An iOS interface that re-thinks the trip-planning flow around <em>auditory landmarks</em> instead of map glyphs — a TTS-first information architecture, structured around the questions blind riders actually ask.</p><div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full case study in progress.</p></div>'
+      body: '<div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full case study in progress.</p></div><h3>What I made</h3><p>An iOS interface that re-thinks the trip-planning flow around <em>auditory landmarks</em> instead of map glyphs — a TTS-first information architecture, structured around the questions blind riders actually ask.</p>'
     },
     climate: {
       meta: 'Data Viz · Survey Analysis',
@@ -2584,10 +2584,10 @@
       if (p.title)   html += `<h2>${p.title}</h2>`;
       if (p.lead)    html += `<p class="lead">${p.lead}</p>`;
       if (p.facts)   html += '<dl class="facts">' + p.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('') + '</dl>';
+      if (!p.body) html += `<div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full writeup in progress.</p></div>`;
       const cat = srcEl?.dataset?.cat || 'misc';
       html += `<div class="fig" style="background:${FIG_BG[cat] || FIG_BG.misc};">[ figure / hero ]</div>`;
       if (p.body) html += `<div class="body">${p.body}</div>`;
-      if (!p.body) html += `<div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full writeup in progress.</p></div>`;
     }
     return html;
   }
