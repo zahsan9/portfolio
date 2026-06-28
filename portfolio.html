@@ -11,24 +11,24 @@
 <style>
   /* ── Tokens ── */
   :root {
-    --paper:       oklch(0.965 0.004 85);
-    --paper-2:     oklch(0.93  0.005 85);
-    --ink:         oklch(0.18  0.005 60);
-    --ink-mid:     oklch(0.45  0.005 60);
-    --ink-low:     oklch(0.65  0.005 60);
-    --line:        oklch(0.88  0.005 80);
-    --control-soft:oklch(0.90  0.005 85);
-    --control-muted:oklch(0.50 0.005 60);
+    --paper:       oklch(0.965 0.004 70);
+    --paper-2:     oklch(0.93  0.005 70);
+    --ink:         oklch(0.18  0.005 70);
+    --ink-mid:     oklch(0.45  0.005 70);
+    --ink-low:     oklch(0.65  0.005 70);
+    --line:        oklch(0.88  0.005 70);
+    --control-soft:oklch(0.90  0.005 70);
+    --control-muted:oklch(0.50 0.005 70);
     --accent:      oklch(0.42  0.14  262);
     --accent-soft: oklch(0.93  0.035 262);
 
     --c-clay:    oklch(0.70 0.09  34);
     --c-blue:    oklch(0.52 0.12  243);
-    --c-cream:   oklch(0.94 0.028 82);
+    --c-cream:   oklch(0.87 0.035 82);
     --c-yellow:  oklch(0.89 0.085 90);
     --c-sage:    oklch(0.74 0.065 152);
     --c-plum:    oklch(0.63 0.09  305);
-    --c-sand:    oklch(0.88 0.022 72);
+    --c-sand:    oklch(0.83 0.026 72);
     --c-charcoal:oklch(0.20 0.008 60);
 
     --serif: 'Instrument Serif', Georgia, serif;
@@ -48,18 +48,18 @@
     --rt-child-dur:   360ms;
     --rt-stagger-base: 60ms;
     --rt-stagger-step: 70ms;
-    --card-ink: oklch(0.18 0.005 60);
-    --card-muted: oklch(0.45 0.005 60);
-    --card-paper: oklch(0.965 0.004 85);
+    --card-ink: oklch(0.18 0.005 70);
+    --card-muted: oklch(0.45 0.005 70);
+    --card-paper: oklch(0.965 0.004 70);
   }
   [data-theme="dark"] {
-    --paper:       oklch(0.20  0.005 60);
-    --paper-2:     oklch(0.245 0.005 60);
-    --ink:         oklch(0.93  0.005 80);
+    --paper:       oklch(0.20  0.005 70);
+    --paper-2:     oklch(0.245 0.005 70);
+    --ink:         oklch(0.93  0.005 70);
     --ink-mid:     oklch(0.58  0.005 70);
-    --ink-low:     oklch(0.42  0.005 65);
-    --line:        oklch(0.28  0.005 60);
-    --control-soft:oklch(0.30  0.005 60);
+    --ink-low:     oklch(0.42  0.005 70);
+    --line:        oklch(0.28  0.005 70);
+    --control-soft:oklch(0.30  0.005 70);
     --control-muted:oklch(0.58 0.005 70);
     --accent-soft: oklch(0.24  0.06  262);
     --c-clay:    oklch(0.70 0.09  34);
@@ -69,7 +69,7 @@
     --c-sage:    oklch(0.74 0.065 152);
     --c-plum:    oklch(0.63 0.09  305);
     --c-sand:    oklch(0.88 0.022 72);
-    --c-charcoal:oklch(0.20 0.008 60);
+    --c-charcoal:oklch(0.27 0.010 60);
   }
 
   /* ── Reset ── */
@@ -152,16 +152,9 @@
     width: 48px; height: 48px;
     display: grid; place-items: center;
     margin-bottom: 34px; cursor: pointer;
-    transition: transform 0.2s ease;
     flex-shrink: 0;
     align-self: flex-start; margin-left: 16px;
   }
-  .rail .logo:active span,
-  .rail .logo.icon-pressing span {
-    transform: scale(0.86);
-    display: inline-block;
-  }
-  .rail .logo:hover { transform: scale(1.06); }
   .rail-nav {
     display: flex; flex-direction: column; gap: 10px;
     align-self: stretch; padding: 0 16px 8px;
@@ -200,103 +193,22 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* ── Connect morph pill ── */
-  .header-contact { display: flex; align-items: center; }
-  .connect-pill {
-    height: 42px;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--paper);
-    display: inline-flex;
-    align-items: center;
-    padding: 4px;
-    box-shadow: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 1px 3px oklch(0 0 0 / 0.12);
-    transition: box-shadow 0.2s ease;
+  /* ── Header contact ── */
+  .contact-nav {
+    display: flex; gap: 10px; align-items: center;
+    font-size: 13px;
+    color: var(--ink-mid);
   }
-  /* Label state */
-  .cp-trigger {
-    padding: 0 12px;
-    height: 34px;
-    display: flex; align-items: center;
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--paper);
-    white-space: nowrap;
-    cursor: pointer;
-    border-radius: 999px;
-    overflow: hidden;
-    max-width: 200px;
-    opacity: 1;
-    transform: scale(1);
-    transition:
-      max-width 0.38s var(--ease-soft),
-      opacity   0.18s ease,
-      padding   0.38s var(--ease-soft),
-      transform 0.28s var(--ease-out);
+  .contact-nav a {
+    color: inherit;
+    transition: color 0.15s ease;
   }
-  .connect-pill.is-open .cp-trigger {
-    max-width: 0;
-    padding: 0;
-    opacity: 0;
-    transform: scale(0.88);
-    pointer-events: none;
+  .contact-sep {
+    color: inherit;
+    user-select: none;
   }
-  /* Icons state */
-  .cp-icons {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    max-width: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: scale(0.88);
-    transition:
-      max-width 0.40s var(--ease-soft) 0.10s,
-      opacity   0.22s ease             0.16s,
-      transform 0.32s var(--ease-out)  0.10s,
-      overflow  0s linear              0.50s;
-  }
-  .connect-pill.is-open .cp-icons {
-    max-width: 360px;
-    overflow: visible;
-    opacity: 1;
-    transform: scale(1);
-    transition:
-      max-width 0.40s var(--ease-soft) 0.10s,
-      opacity   0.22s ease             0.16s,
-      transform 0.32s var(--ease-out)  0.10s,
-      overflow  0s linear              0s;
-  }
-  /* Individual icon buttons */
-  .cp-icon-btn {
-    height: 34px;
-    border-radius: 999px;
-    display: flex; align-items: center;
-    padding: 0 9px;
-    gap: 5px;
-    color: var(--paper);
-    white-space: nowrap;
-    flex-shrink: 0;
-    text-decoration: none;
-    transition: background 0.15s ease;
-  }
-  .cp-icon-btn:hover { background: oklch(1 0 0 / 0.14); }
-  .cp-icon-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
-  /* Per-icon text labels — only show on hovered icon */
-  .cp-text {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    letter-spacing: 0.01em;
-    overflow: hidden;
-    max-width: 0;
-    opacity: 0;
-    transition: max-width 0.30s var(--ease-soft), opacity 0.18s ease;
-  }
-  .connect-pill.is-open .cp-icon-btn:hover .cp-text {
-    max-width: 5.5em;
-    opacity: 1;
-  }
+  .contact-nav a:hover,
+  .contact-nav a:focus-visible { color: var(--ink); }
   .theme-btn {
     width: 48px; height: 48px; border-radius: 50%;
     display: grid; place-items: center;
@@ -509,15 +421,9 @@
   .banner .bio em { font-style: italic; color: var(--accent); }
   .banner .meta {
     margin-top: 20px; font-size: 13px; color: var(--ink-mid);
-    display: flex; gap: 18px; justify-content: center; flex-wrap: wrap;
+    text-align: center;
   }
-  .banner .meta span { display: inline-flex; align-items: center; gap: 6px; }
-  .banner .meta span:nth-child(2) {
-    font-size: 16px;
-    line-height: 1;
-    opacity: 0.72;
-  }
-  .banner .meta svg { width: 12px; height: 12px; }
+  .banner .meta-sep { font-weight: 700; padding: 0 5px; }
   .feed {
     transform: translateX(calc(var(--feed-shift, 0px) * -1));
     transition: transform var(--motion-slow) var(--ease-soft);
@@ -539,7 +445,7 @@
     font-family: inherit; font-size: 13px; color: var(--control-muted);
   }
   .tabs {
-    width: calc(75vw - 96px);
+    width: min(980px, 100% - 72px);
     margin: 0 auto;
     padding: 20px 0 28px;
     display: flex; flex-wrap: wrap; gap: 28px;
@@ -632,22 +538,25 @@
   /* ── Pin masonry feed ── */
   .feed {
     --card-gap: 36px;
-    width: calc(75vw - 96px);
+    width: min(980px, 100% - 72px);
     margin: 0 auto;
     column-count: 3; column-gap: var(--card-gap);
     padding: 8px 0 88px;
   }
   .app.sheet-open .feed {
     width: calc(25vw - 56px + var(--open-column-gutter));
+    max-width: 327px;
     margin: 0;
     column-count: 1;
     padding: calc(var(--chrome-size) + 24px) 0 80px var(--open-column-gutter);
     transform: none;
   }
-  @media (max-width: 1400px) { .feed { --card-gap: 32px; width: auto; margin: 0; column-count: 3; padding: 8px 140px 88px; } .tabs { width: auto; margin: 0; padding-left: 140px; padding-right: 140px; } }
-  @media (max-width: 1000px) { .feed { --card-gap: 28px; column-count: 2; padding: 8px 48px 64px; } .tabs { padding-left: 48px; padding-right: 48px; } }
-  @media (max-width: 600px)  { .feed { column-count: 1; padding: 8px 20px 60px; } .tabs { padding-left: 20px; padding-right: 20px; } }
-  @media (max-width: 1400px) { .app.sheet-open .feed { width: calc(33.333vw - 117.333px); } }
+  @media (max-width: 1400px) { .feed { --card-gap: 32px; } }
+  @media (max-width: 1000px) {
+    .feed { --card-gap: 28px; column-count: 2; }
+  }
+  @media (max-width: 600px)  { .feed { column-count: 1; } }
+  @media (max-width: 1400px) { .app.sheet-open .feed { width: min(calc(33.333vw - 140px), 327px); } }
   @media (max-width: 1000px) { .app.sheet-open .feed { width: calc(50vw - 78px); } }
   @media (max-width: 600px)  { .app.sheet-open .feed { width: calc(100vw - 16px); } }
 
@@ -671,6 +580,7 @@
   .pin .art {
     border-radius: 16px; overflow: hidden; position: relative;
     padding: 24px; display: flex; flex-direction: column;
+    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.08);
     transition:
       transform var(--motion-med) var(--ease-out),
       box-shadow var(--motion-med) var(--ease-out),
@@ -709,9 +619,8 @@
   .art-sage    { background: var(--c-sage);    color: var(--card-ink); }
   .art-plum    { background: var(--c-plum);    color: var(--card-ink); }
   .art-sand    { background: var(--c-sand);    color: var(--card-ink); }
-  .art-charcoal{ background: var(--c-charcoal);color: oklch(0.94 0.005 80); border: 1px solid oklch(1 0 0 / 0.06); }
-  .art-paper   { background: oklch(0.99 0 0);  color: var(--card-ink); border: 1px solid var(--line); }
-  html[data-theme="light"] .art:not(.art-charcoal) { border: 1px solid var(--line); }
+  .art-charcoal{ background: var(--c-charcoal);color: oklch(0.94 0.005 80); box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.1); }
+  .art-paper   { background: oklch(0.88 0.004 80); color: var(--card-ink); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.1); }
 
   /* Pin typography */
   .pin h3 {
@@ -907,12 +816,12 @@
   .exp-card {
     --scroll-reveal-opacity: 0;
     --hover-tilt: 0deg;
-    flex: 0 0 clamp(250px, 24vw, 330px);
+    flex: 0 0 clamp(260px, 24vw, 340px);
     aspect-ratio: 4 / 5;
-    height: auto;
     min-height: 0;
+    height: auto;
     border-radius: 16px;
-    padding: 24px;
+    padding: 22px;
     color: var(--card-ink);
     display: flex;
     flex-direction: column;
@@ -950,7 +859,7 @@
   .exp-card h3 {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(30px, 3vw, 42px);
+    font-size: clamp(28px, 2.6vw, 38px);
     line-height: 1.02;
     letter-spacing: 0;
     margin: auto 0 22px;
@@ -1002,8 +911,7 @@
     border-radius: 999px;
     background: oklch(0.98 0.004 85 / 0.78);
     color: var(--card-ink);
-    border: 1px solid oklch(1 0 0 / 0.24);
-    box-shadow: 0 12px 28px -16px oklch(0.08 0.005 60 / 0.55);
+    box-shadow: 0 0 0 1px oklch(1 0 0 / 0.24), 0 12px 28px -16px oklch(0.08 0.005 60 / 0.55);
     backdrop-filter: blur(10px) saturate(1.18);
     -webkit-backdrop-filter: blur(10px) saturate(1.18);
     font-family: var(--mono);
@@ -1045,12 +953,12 @@
     display: inline-flex; align-items: center; gap: 0;
     height: 38px; padding: 0 12px; border-radius: 999px;
     background: transparent; color: var(--ink);
-    border: 1px solid var(--line);
+    box-shadow: 0 0 0 1px var(--line);
     cursor: pointer;
     transition: background var(--motion-fast) ease, color var(--motion-fast) ease,
-                border-color var(--motion-fast) ease, gap var(--motion-fast) ease;
+                box-shadow var(--motion-fast) ease, gap var(--motion-fast) ease;
   }
-  .sheet-close:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); gap: 6px; }
+  .sheet-close:hover { background: var(--ink); color: var(--paper); box-shadow: 0 0 0 1px var(--ink); gap: 6px; }
   .sheet-btn-label {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.01em;
     white-space: nowrap; overflow: hidden; max-width: 0; opacity: 0;
@@ -1102,7 +1010,14 @@
   .sheet-body .body h3 { font-family: var(--sans); font-weight: 600; font-size: 24px; margin: 24px 0 8px; }
   .sheet-body .body p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
   /* ── About page view ── */
-  .about-page.active { overflow-y: auto; align-items: flex-start; }
+  .about-page.active {
+    min-height: calc(100vh - var(--chrome-size));
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   .about-page .page-body { max-width: 560px; margin: 0 auto; text-align: center; }
 
   /* ── About page ── */
@@ -1116,11 +1031,6 @@
     transition: transform var(--motion-med) var(--ease-out);
   }
   .ab-bento-photo:hover img { transform: rotate(1deg); }
-  .page .ab-headline {
-    font-family: var(--serif); font-size: 54px; font-weight: 600;
-    line-height: 0.98; letter-spacing: 0;
-    color: var(--ink); margin: 0 0 28px; text-align: center;
-  }
   .ab-bio {
     font-size: 15px; line-height: 1.65; color: var(--ink-mid); margin-bottom: 0;
   }
@@ -1163,61 +1073,144 @@
   }
   .ab-principle:last-child { border-bottom: none; padding-bottom: 0; }
 
-  /* ── About bento grid ── */
-  .ab-bento {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 14px;
-    width: 100%;
-    max-width: 780px;
-    margin: 32px auto 0;
+  /* ── About stack ── */
+  .ab-stack {
+    --stack-w: clamp(320px, 45vw, 440px);
+    --stack-peek: clamp(94px, 9vw, 112px);
+    --stack-dur: 540ms;
+    position: relative;
+    width: min(calc(var(--stack-w) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek)), 100% - 48px);
+    height: clamp(455px, 59vw, 585px);
+    margin: 0 auto;
+    perspective: 1200px;
+    transform: translate(clamp(-90px, -4vw, -44px), 34px);
   }
-  .ab-bento-card {
-    border-radius: 20px;
-    overflow: hidden;
-    padding: 22px;
+  .ab-stack-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--stack-w);
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    min-height: 158px;
+    cursor: default;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.08);
+    transform:
+      translateX(var(--stack-x, 0px))
+      translateY(var(--lift-y, 0px))
+      scale(var(--stack-scale, 1))
+      rotate(calc(var(--stack-r, 0deg) + var(--hover-r, 0deg)));
+    transform-origin: 50% 100%;
     transition:
-      transform var(--motion-med) var(--ease-out),
-      box-shadow var(--motion-med) var(--ease-out);
+      transform var(--stack-dur) cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow var(--stack-dur) ease;
+    opacity: 1;
+    z-index: var(--stack-z, 1);
+    will-change: transform;
   }
-  .ab-bento-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px -8px oklch(0.1 0.005 60 / 0.18);
+  .art-charcoal.ab-stack-card,
+  .art-blue.ab-stack-card { box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.1); }
+  .ab-stack-card.is-front {
+    box-shadow: 0 34px 70px -44px oklch(0.08 0.005 60 / 0.72), inset 0 0 0 1px oklch(0 0 0 / 0.08);
   }
-  .ab-bento-1 { grid-column: 1; grid-row: 1 / 3; }
-  .ab-bento-2 { grid-column: 2 / 4; grid-row: 1; }
-  .ab-bento-3 { grid-column: 2; grid-row: 2; }
-  .ab-bento-4 { grid-column: 3; grid-row: 2; }
-  .ab-bento-5 { grid-column: 1; grid-row: 3; }
-  .ab-bento-6 { grid-column: 2; grid-row: 3; }
-  .ab-bento-7 { grid-column: 3; grid-row: 3; }
+  .ab-stack.is-busy .ab-stack-card:not(.is-lifting):not(.is-placing) {
+    pointer-events: none;
+  }
+  .ab-stack.is-loading .ab-stack-card {
+    transform:
+      translateX(var(--stack-load-x, var(--stack-x, 0px)))
+      translateY(28px)
+      scale(0.94)
+      rotate(0deg);
+    transition: none;
+    box-shadow: 0 18px 40px -30px oklch(0.08 0.005 60 / 0.5), inset 0 0 0 1px oklch(0 0 0 / 0.08);
+  }
+  .ab-stack-card.is-lifting {
+    --lift-y: -56px;
+    --stack-scale: 1.045;
+    z-index: 3000;
+    transition:
+      transform 250ms cubic-bezier(0.36, 0, 0.2, 1),
+      box-shadow 250ms ease;
+    box-shadow: 0 48px 96px -48px oklch(0.08 0.005 60 / 0.76), inset 0 0 0 1px oklch(0 0 0 / 0.08);
+  }
+  .ab-stack-card.is-placing {
+    --lift-y: 0px;
+    --stack-scale: 1;
+    z-index: 3000;
+    transition:
+      transform 560ms cubic-bezier(0.18, 0.72, 0.28, 1.06),
+      box-shadow 560ms ease;
+  }
+  .ab-stack-card:not(.is-front) {
+    cursor: pointer;
+  }
+  .ab-stack:not(.is-busy) .ab-stack-card:not(.is-front):hover,
+  .ab-stack:not(.is-busy) .ab-stack-card:not(.is-front):focus-visible {
+    --lift-y: -14px;
+    --hover-r: -2deg;
+    box-shadow: 0 22px 54px -34px oklch(0.08 0.005 60 / 0.64), inset 0 0 0 1px oklch(0 0 0 / 0.08);
+  }
+  .ab-stack-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
   .ab-card-eyebrow {
     font-family: var(--mono); font-size: 9px;
     letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;
   }
-  .ab-card-stat {
-    font-family: var(--serif); font-size: 56px;
-    line-height: 1; letter-spacing: -0.03em; margin-top: auto;
+  .ab-stack-title {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 4vw, 42px);
+    line-height: 1.05; letter-spacing: -0.01em;
   }
-  .ab-card-unit { font-size: 19px; letter-spacing: -0.01em; }
-  .ab-card-title {
-    font-family: var(--serif); font-weight: 400; font-size: 24px;
-    line-height: 1.05; letter-spacing: -0.01em; margin-top: auto;
+  .ab-stack-stat {
+    font-family: var(--serif); font-size: clamp(54px, 8vw, 78px);
+    line-height: 1; letter-spacing: -0.03em;
   }
-  .ab-card-sub {
-    font-family: var(--mono); font-size: 9px;
-    letter-spacing: 0.04em; margin-top: 10px;
-    opacity: 0; transform: translateY(-3px);
-    transition: opacity 0.18s ease, transform 0.22s var(--ease-out);
+  .ab-stack-unit { font-size: 18px; letter-spacing: -0.01em; }
+  .ab-stack-body { margin-top: auto; }
+  .ab-stack-detail {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.04em; line-height: 1.7;
+    opacity: 0.68;
+    padding-top: 14px;
+    border-top: 2px solid currentColor;
   }
-  .ab-bento-card:hover .ab-card-sub {
-    opacity: 0.65; transform: translateY(0);
+  .ab-stack-card .ab-stack-header,
+  .ab-stack-card .ab-stack-body {
+    transition: opacity 340ms ease;
   }
-
+  .ab-stack-card:not(.is-front):not(.is-revealing) .ab-stack-header,
+  .ab-stack-card:not(.is-front):not(.is-revealing) .ab-stack-body { opacity: 0; }
+  .ab-stack-tab {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    transition: opacity 340ms ease;
+    pointer-events: none;
+  }
+  .ab-stack-card.is-front .ab-stack-tab,
+  .ab-stack-card.is-revealing .ab-stack-tab { opacity: 0; }
+  .ab-stack-tab span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
   /* ── Case study layout ── */
   .cs-hero {
     background: oklch(0.13 0.006 60);
@@ -1338,7 +1331,7 @@
   }
   .cs-preview-frame,
   .cs-artifact-frame {
-    border: 1px solid var(--line);
+    box-shadow: 0 0 0 1px var(--line);
     border-radius: 8px;
     background: var(--paper);
     overflow: hidden;
@@ -1406,10 +1399,9 @@
     place-items: center;
     background: oklch(0.98 0.004 85 / 0.82);
     color: oklch(0.18 0.005 60);
-    border: 1px solid oklch(0.18 0.005 60 / 0.12);
     backdrop-filter: blur(10px) saturate(1.1);
     -webkit-backdrop-filter: blur(10px) saturate(1.1);
-    box-shadow: 0 10px 24px -16px oklch(0.08 0.005 60 / 0.48);
+    box-shadow: 0 0 0 1px oklch(0.18 0.005 60 / 0.12), 0 10px 24px -16px oklch(0.08 0.005 60 / 0.48);
     transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) ease;
   }
   .cs-expand-icon svg {
@@ -1640,7 +1632,7 @@
   .cs-tag {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.015em;
     color: var(--ink-mid); padding: 5px 11px; border-radius: 999px;
-    border: 1px solid var(--line); background: var(--paper-2);
+    box-shadow: 0 0 0 1px var(--line); background: var(--paper-2);
   }
 
   /* Learnings */
@@ -1671,7 +1663,7 @@
       flex-basis: 286px;
       height: auto;
       min-height: 0;
-      padding: 24px;
+      padding: 22px;
     }
   }
   @media (max-width: 800px) {
@@ -1684,6 +1676,13 @@
   }
   @media (max-width: 600px) {
     .exp-track { padding: 0 20px; }
+    .ab-stack {
+      --stack-w: min(66vw, 285px);
+      --stack-peek: 56px;
+      width: min(calc(var(--stack-w) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek)), 100% - 32px);
+      height: min(96vw, 400px);
+      transform: translateY(18px);
+    }
 .cs-two-col,
     .cs-artifact-grid,
     .cs-viz-grid,
@@ -1744,14 +1743,6 @@
         </svg>
         <span class="rail-label">Work</span>
       </button>
-      <button class="rail-btn" data-route="playground" title="Play" aria-label="Play">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 3h6l1 7H8L9 3Z"/>
-          <path d="M8 10c-2.5 2-4 4.5-4 7a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4c0-2.5-1.5-5-4-7"/>
-          <path d="M10 17h4"/>
-        </svg>
-        <span class="rail-label">Play</span>
-      </button>
       <button class="rail-btn" data-route="experience" title="Experience" aria-label="Experience">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="7" width="18" height="13" rx="2"/>
@@ -1779,25 +1770,13 @@
 
     <!-- Top bar -->
     <header class="topbar">
-      <div class="header-contact">
-        <div class="connect-pill" id="connectPill">
-          <button class="cp-trigger" type="button" aria-label="Show contact links" aria-expanded="false">Let's Connect!</button>
-          <div class="cp-icons" role="group" aria-label="Contact links">
-            <a class="cp-icon-btn" href="mailto:zahsan9@uw.edu" aria-label="Email">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.8 5h16.4A2.8 2.8 0 0 1 23 7.8v8.4a2.8 2.8 0 0 1-2.8 2.8H3.8A2.8 2.8 0 0 1 1 16.2V7.8A2.8 2.8 0 0 1 3.8 5Zm8.2 8.35L4.35 7.15a1 1 0 0 0-.7 1.76l7.72 6.26a1 1 0 0 0 1.26 0l7.72-6.26a1 1 0 0 0-.7-1.76L12 13.35Z"/></svg>
-              <span class="cp-text">Email</span>
-            </a>
-            <a class="cp-icon-btn" href="https://www.linkedin.com/in/ahsanzainab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S.02 4.88.02 3.5 1.13 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4v13h-4V8Zm7 0h3.84v1.78h.05c.53-1.01 1.84-2.08 3.79-2.08 4.05 0 4.8 2.67 4.8 6.14V21h-4v-6.34c0-1.51-.03-3.46-2.11-3.46-2.11 0-2.43 1.65-2.43 3.35V21h-4V8Z"/></svg>
-              <span class="cp-text">LinkedIn</span>
-            </a>
-            <a class="cp-icon-btn" href="https://github.com/zahsan9" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10Z"/></svg>
-              <span class="cp-text">GitHub</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <nav class="contact-nav" aria-label="Contact links">
+        <a href="mailto:zahsan9@uw.edu">Email</a>
+        <span class="contact-sep" aria-hidden="true">/</span>
+        <a href="https://www.linkedin.com/in/ahsanzainab" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="contact-sep" aria-hidden="true">/</span>
+        <a href="https://github.com/zahsan9" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
     </header>
 
     <!-- ═══ FEED VIEW ═══ -->
@@ -1809,13 +1788,10 @@
         </div>
         <h1 id="nameTitle">Zainab <em>Ahsan</em></h1>
         <p class="bio">Co-Founder @ WIIRED Studio | CS + Data Science @ UW<br>I design and ship human-centered software systems</p>
-        <div class="meta">
-          <span>Based in Seattle, WA</span>
-        </div>
+        <div class="meta">Seattle, WA <span class="meta-sep">·</span> 5 Boards, 11 Pins</div>
       </div>
 
       <nav class="tabs" aria-label="Filter work">
-        <span class="tabs-group" aria-hidden="true"><span class="tabs-label">Boards</span><span class="tabs-divider">//</span></span>
         <div class="tabs-scroll">
           <button class="tab active" data-filter="all" aria-pressed="true">All</button>
           <button class="tab" data-filter="ux" aria-pressed="false">UI / UX</button>
@@ -1839,6 +1815,7 @@
         <!-- Metro case study -->
         <article class="pin" data-cat="ux" data-page="metro" data-year="2025">
           <div class="art art-clay ar-45">
+            <div class="pin-meta">Case Study</div>
             <h3>Re-routing Metro for blind commuters.</h3>
           </div>
         </article>
@@ -1846,6 +1823,7 @@
         <!-- Adobe internship -->
         <article class="pin" data-cat="swe" data-page="adobe" data-year="2025">
           <div class="art art-sage ar-45">
+            <div class="pin-meta">Case Study</div>
             <h3>Adobe<br>Express.</h3>
           </div>
         </article>
@@ -1853,13 +1831,15 @@
         <!-- Edmonds survey analysis -->
         <article class="pin" data-cat="viz" data-page="climate" data-year="2026">
           <div class="art art-yellow ar-45">
-            <h3>Analyzing the neutral.</h3>
+            <div class="pin-meta">Case Study</div>
+            <h3>22% neutral.</h3>
           </div>
         </article>
 
         <!-- WIIRED Studio -->
         <article class="pin" data-cat="studio" data-page="wiired" data-year="2026">
           <div class="art art-charcoal ar-45">
+            <div class="pin-meta">Case Study</div>
             <h3 style="margin-top: auto;">WIIRED<br><em style="font-style:italic; color:var(--c-blue);">Studio.</em></h3>
           </div>
         </article>
@@ -1913,53 +1893,77 @@
 
     <!-- ═══ ABOUT PAGE ═══ -->
     <section class="page about-page" id="aboutView">
-      <h2 class="ab-headline">Hi, I'm Zainab.</h2>
+      <div class="ab-stack">
+        <div class="ab-stack-card art-blue" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>Metro Accessibility</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">Metro Accessibility</div>
+            <div class="ab-stack-stat">−42<span class="ab-stack-unit">%</span></div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">Trip-planning time reduction for blind riders. Re-routed Metro transit for screen-reader navigation.</div>
+          </div>
+        </div>
 
-      <div class="ab-bento">
-        <div class="ab-bento-card ab-bento-1 ab-bento-photo">
-          <img src="profile.jpg" alt="Zainab Ahsan">
+        <div class="ab-stack-card art-charcoal" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>Front-end Engineering</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">Front-end Engineering</div>
+            <div class="ab-stack-title">I build what I design.</div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">React · Next.js · TypeScript · D3</div>
+          </div>
         </div>
-        <div class="ab-bento-card ab-bento-2 art-blue">
-          <div class="ab-card-eyebrow">Re-routing Metro for blind commuters</div>
-          <div class="ab-card-stat" style="font-size:48px;">−42<span class="ab-card-unit">%</span></div>
-          <div class="ab-card-sub">Trip-planning time reduction, blind riders</div>
+
+        <div class="ab-stack-card art-yellow" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>WIIRED Studio</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">WIIRED Studio · Co-founder</div>
+            <div class="ab-stack-stat">12<span class="ab-stack-unit"> clients</span></div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">Brand systems + web apps. Design engineering for startups and studios.</div>
+          </div>
         </div>
-        <div class="ab-bento-card ab-bento-3 art-charcoal">
-          <div class="ab-card-eyebrow">Front-end Engineering</div>
-          <h3 class="ab-card-title">I build<br>what I design.</h3>
-          <div class="ab-card-sub">React · Next.js · TypeScript · D3</div>
+
+        <div class="ab-stack-card art-sage" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>Data Visualization</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">Data Visualization</div>
+            <div class="ab-stack-title">CHI '26 · UW IDL.</div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">Chart literacy research with Prof. Jeff Heer at the UW Interactive Data Lab.</div>
+          </div>
         </div>
-        <div class="ab-bento-card ab-bento-4 art-yellow">
-          <div class="ab-card-eyebrow">WIIRED Studio · Co-founder</div>
-          <div class="ab-card-stat">12<span class="ab-card-unit"> clients</span></div>
+
+        <div class="ab-stack-card art-clay" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>Product Design</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">Product Design</div>
+            <div class="ab-stack-stat">14<span class="ab-stack-unit"> interviews</span></div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">End-to-end research across 3 usability rounds.</div>
+          </div>
         </div>
-        <div class="ab-bento-card ab-bento-5 art-sage">
-          <div class="ab-card-eyebrow">Data Visualization</div>
-          <h3 class="ab-card-title">CHI '26 · UW IDL.</h3>
-          <div class="ab-card-sub">Chart literacy research w/ Prof. Jeff Heer</div>
+
+        <div class="ab-stack-card art-plum" role="button" tabindex="0">
+          <div class="ab-stack-tab" aria-hidden="true"><span>Currently</span></div>
+          <div class="ab-stack-header">
+            <div class="ab-card-eyebrow">Currently</div>
+            <div class="ab-stack-title">Seattle, WA.</div>
+          </div>
+          <div class="ab-stack-body">
+            <div class="ab-stack-detail">CS + DS @ UW · Summer '26</div>
+          </div>
         </div>
-        <div class="ab-bento-card ab-bento-6 art-clay">
-          <div class="ab-card-eyebrow">Product Design</div>
-          <div class="ab-card-stat">14<span class="ab-card-unit"> interviews</span></div>
-          <div class="ab-card-sub">3 usability rounds · end-to-end</div>
-        </div>
-        <div class="ab-bento-card ab-bento-7 art-plum">
-          <div class="ab-card-eyebrow">Currently</div>
-          <h3 class="ab-card-title">Seattle,<br>WA.</h3>
-          <div class="ab-card-sub">CS + DS @ UW · Summer '26</div>
-        </div>
+
       </div>
 
     </section>
 
-    <!-- ═══ PLAYGROUND PAGE ═══ -->
-    <section class="page" id="playgroundView">
-      <div class="page-body">
-        <p class="pg-eyebrow">Play</p>
-        <h2 class="pg-headline">Components &<br><em>little things.</em></h2>
-        <p class="pg-sub">Experiments, micro-interactions, and things that don't belong anywhere else.</p>
-      </div>
-    </section>
 
     <!-- ═══ EXPERIENCE PAGE ═══ -->
     <section class="page exp-page" id="expView" data-exp-stage="0">
@@ -2058,8 +2062,6 @@
       meta: 'About',
       eyebrow: '',
       custom: `
-        <h2 class="ab-headline">Hi, I'm Zainab.</h2>
-
         <div class="ab-bento" style="margin: 28px 0 0; max-width: none;">
           <div class="ab-bento-card ab-bento-1 ab-bento-photo">
             <img src="profile.jpg" alt="Zainab Ahsan">
@@ -2662,16 +2664,6 @@
       closeSheet();
     }
   });
-  function playIconPress(button) {
-    if (!button) return;
-    button.classList.remove('icon-pressing');
-    void button.offsetWidth;
-    button.classList.add('icon-pressing');
-    setTimeout(() => button.classList.remove('icon-pressing'), 260);
-  }
-  document.querySelectorAll('.rail .logo').forEach(button => {
-    button.addEventListener('click', () => playIconPress(button));
-  });
   document.querySelectorAll('.pin[data-page]').forEach(el => {
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'button');
@@ -2682,6 +2674,111 @@
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSheet(el.dataset.page, el); }
     });
   });
+
+  // ── About card stack ──
+  let refreshAboutStack = () => {};
+  let playAboutStackIntro = () => {};
+  const aboutStack = document.querySelector('.ab-stack');
+  if (aboutStack) {
+    const aboutCards = [...aboutStack.querySelectorAll('.ab-stack-card')];
+    let aboutOrder = [1, 0, ...aboutCards.map((_, i) => i).filter(i => i > 1)];
+    let aboutStackBusy = false;
+    let aboutStackMetrics = null;
+
+    function measureAboutStack() {
+      const styles = getComputedStyle(aboutStack);
+      const peek = parseFloat(styles.getPropertyValue('--stack-peek')) || 48;
+      const stackW = aboutStack.clientWidth;
+      const cardW = aboutCards[0]?.offsetWidth || 0;
+      const fanBalance = ((aboutCards.length - 1) * peek) / 2;
+      const baseX = Math.max(0, ((stackW - cardW) / 2) - fanBalance);
+      return { peek, baseX };
+    }
+
+    function renderAboutStack({ freezeMetrics = false } = {}) {
+      if (!freezeMetrics || !aboutStackMetrics) {
+        aboutStackMetrics = measureAboutStack();
+      }
+      const { peek, baseX } = aboutStackMetrics;
+      const tilts = [0, -2.5, 2, -1.5, 2.5, -2];
+      aboutCards.forEach((card, i) => {
+        const depth = aboutOrder.indexOf(i);
+        const isFront = depth === 0;
+        const rotation = tilts[depth] ?? 0;
+        const x = baseX + depth * peek;
+        card.style.setProperty('--depth', depth);
+        card.style.setProperty('--stack-x', `${x}px`);
+        card.style.setProperty('--stack-load-x', `${baseX}px`);
+        card.style.setProperty('--stack-r', `${rotation}deg`);
+        card.style.setProperty('--stack-z', aboutCards.length - depth);
+        card.classList.toggle('is-front', isFront);
+        card.setAttribute('aria-pressed', isFront ? 'true' : 'false');
+      });
+    }
+
+    function selectAboutCard(index) {
+      if (aboutStackBusy) return;
+      const front = aboutOrder[0];
+      const nextOrder = index === front
+        ? [...aboutOrder.slice(1), front]
+        : [index, ...aboutOrder.filter(i => i !== index)];
+
+      aboutStackBusy = true;
+      aboutStackMetrics = measureAboutStack();
+      const card = aboutCards[index];
+      aboutStack.classList.add('is-busy');
+      card.style.setProperty('--stack-r', '-2.5deg');
+      card.classList.add('is-lifting', 'is-revealing');
+
+      setTimeout(() => {
+        aboutOrder = nextOrder;
+        renderAboutStack({ freezeMetrics: true });
+        card.style.setProperty('--stack-r', '0deg');
+        card.classList.remove('is-lifting');
+        card.classList.add('is-placing');
+      }, 250);
+
+      setTimeout(() => {
+        card.classList.remove('is-placing');
+        card.classList.remove('is-revealing');
+        aboutStackMetrics = null;
+        renderAboutStack();
+        aboutStack.classList.remove('is-busy');
+        aboutStackBusy = false;
+      }, 820);
+    }
+
+    aboutCards.forEach((card, index) => {
+      card.addEventListener('click', () => selectAboutCard(index));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectAboutCard(index);
+        }
+      });
+    });
+
+    renderAboutStack();
+    refreshAboutStack = () => {
+      if (aboutStackBusy) return;
+      aboutStackMetrics = null;
+      renderAboutStack();
+    };
+    playAboutStackIntro = () => {
+      if (aboutStackBusy) return;
+      aboutStackMetrics = null;
+      aboutStack.classList.add('is-loading');
+      renderAboutStack();
+      void aboutStack.offsetWidth;
+      requestAnimationFrame(() => {
+        aboutStack.classList.remove('is-loading');
+      });
+    };
+    window.addEventListener('resize', () => {
+      refreshAboutStack();
+    });
+  }
+
   // ── Filter + FLIP ──
   const feed = document.getElementById('feed');
   const feedEmpty = document.getElementById('feedEmpty');
@@ -2781,7 +2878,6 @@
   const feedView        = document.getElementById('feedView');
   const aboutView       = document.getElementById('aboutView');
   const expView         = document.getElementById('expView');
-  const playgroundView  = document.getElementById('playgroundView');
 const expScroll   = document.getElementById('expScroll');
   const expTrack    = document.getElementById('expTrack');
   let expTravelPx = 0;
@@ -2886,7 +2982,7 @@ function setRoute(name) {
     pendingRouteName = name;
     document.querySelectorAll('.rail-btn[data-route]').forEach(b => b.classList.toggle('active', b.dataset.route === name));
 
-    const viewMap = { feed: feedView, about: aboutView, experience: expView, playground: playgroundView };
+    const viewMap = { feed: feedView, about: aboutView, experience: expView };
     const leaving  = viewMap[currentRouteName];
     const arriving = viewMap[name];
 
@@ -2912,6 +3008,10 @@ function setRoute(name) {
 
       if (name === 'experience') playExperienceStoryboard();
       else { clearExperienceStoryboard(); setExperienceStage(0); }
+      if (name === 'about') {
+        playAboutStackIntro();
+        requestAnimationFrame(() => requestAnimationFrame(refreshAboutStack));
+      }
       main.scrollTo({ top: 0, behavior: name === 'experience' ? 'auto' : 'smooth' });
       updateFeedScrollbar();
       requestAnimationFrame(() => {
@@ -2924,7 +3024,7 @@ function setRoute(name) {
   document.getElementById('logoBtn').addEventListener('click', () => setRoute('feed'));
 
   // ── Hash routing ──
-  const VALID_ROUTES = new Set(['feed', 'about', 'experience', 'playground']);
+  const VALID_ROUTES = new Set(['feed', 'about', 'experience']);
   const routeFromHash = () => {
     const hash = location.hash.replace('#', '');
     return VALID_ROUTES.has(hash) ? hash : 'feed';
@@ -3015,39 +3115,6 @@ function setRoute(name) {
       applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
     });
 
-  // ── Connect morph pill ──
-  (function () {
-    const pill    = document.getElementById('connectPill');
-    const trigger = pill.querySelector('.cp-trigger');
-    const icons   = pill.querySelector('.cp-icons');
-
-    const open = () => {
-      pill.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
-    };
-    const close = () => {
-      pill.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
-    };
-
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      pill.classList.contains('is-open') ? close() : open();
-    });
-
-    // Close when mouse leaves the pill entirely
-    pill.addEventListener('mouseleave', close);
-
-    // Close when a link inside icons is activated
-    icons.addEventListener('click', () => setTimeout(close, 120));
-
-    document.addEventListener('click', (e) => {
-      if (!pill.contains(e.target)) close();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') close();
-    });
-  })();
   })();
 
   updateFeedScrollbar();
