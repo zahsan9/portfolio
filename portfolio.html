@@ -540,28 +540,29 @@
     --card-gap: 36px;
     width: min(980px, 100% - 72px);
     margin: 0 auto;
-    column-count: 3; column-gap: var(--card-gap);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap);
+    align-items: start;
     padding: 8px 0 88px;
   }
   .app.sheet-open .feed {
     width: calc(25vw - 56px + var(--open-column-gutter));
     max-width: 327px;
     margin: 0;
-    column-count: 1;
+    grid-template-columns: 1fr;
     padding: calc(var(--chrome-size) + 24px) 0 80px var(--open-column-gutter);
     transform: none;
   }
   @media (max-width: 1400px) { .feed { --card-gap: 32px; } }
   @media (max-width: 1000px) {
-    .feed { --card-gap: 28px; column-count: 2; }
+    .feed { --card-gap: 28px; grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 600px)  { .feed { column-count: 1; } }
+  @media (max-width: 600px)  { .feed { grid-template-columns: 1fr; } }
   @media (max-width: 1400px) { .app.sheet-open .feed { width: min(calc(33.333vw - 140px), 327px); } }
   @media (max-width: 1000px) { .app.sheet-open .feed { width: calc(50vw - 78px); } }
   @media (max-width: 600px)  { .app.sheet-open .feed { width: calc(100vw - 16px); } }
 
   .pin {
-    break-inside: avoid; margin-bottom: var(--card-gap); cursor: pointer;
+    cursor: pointer;
     position: relative; padding-top: 0; padding-bottom: 0;
     transition:
       padding-top 260ms var(--ease-out),
@@ -1793,7 +1794,7 @@
         </div>
         <h1 id="nameTitle">Zainab <em>Ahsan</em></h1>
         <p class="bio">Co-Founder @ WIIRED Studio | CS + Data Science @ UW<br>I design and ship human-centered software systems</p>
-        <div class="meta">Seattle, WA <span class="meta-sep">·</span> 5 Boards, 11 Pins</div>
+        <div class="meta">Seattle, WA <span class="meta-sep">·</span> <span id="metaBoardCount"></span> Boards, <span id="metaPinCount"></span> Pins</div>
       </div>
 
       <nav class="tabs" aria-label="Filter work">
@@ -2783,6 +2784,11 @@
   const feed = document.getElementById('feed');
   const feedEmpty = document.getElementById('feedEmpty');
   const pins = [...feed.querySelectorAll('.pin')];
+  const boardCount = document.querySelectorAll('.tab:not([data-filter="all"])').length;
+  const pinCount = pins.length;
+  document.getElementById('metaBoardCount').textContent = boardCount;
+  document.getElementById('metaPinCount').textContent = pinCount;
+
   const CAT_LABELS = {
     ux: 'UI / UX',
     swe: 'SWE',
