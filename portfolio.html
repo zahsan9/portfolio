@@ -2057,6 +2057,7 @@
   const PAGES = {
     about: {
       meta: 'About',
+      wip: true,
       eyebrow: '',
       custom: `
         <div class="cs-wip"><span class="cs-label">In progress</span><p class="cs-wip-text">More coming soon.</p></div>
@@ -2098,6 +2099,7 @@
     },
     metro: {
       meta: 'UX · 2025',
+      wip: true,
       eyebrow: 'King County Metro',
       title: 'Re-routing Metro for <em>blind commuters.</em>',
       lead: 'In 2025 I led a redesign of King County Metro\'s trip-planning flow with the Allen School Accessibility Lab. We shipped an iOS prototype to 800 beta riders.',
@@ -2251,6 +2253,7 @@
     },
     wiired: {
       meta: 'Co-founder · 2024 →',
+      wip: true,
       eyebrow: 'WIIRED Studio',
       custom: `
         <div class="cs-hero">
@@ -2387,6 +2390,7 @@
     },
     adobe: {
       meta: 'SWE · Sum \'25',
+      wip: true,
       eyebrow: 'Adobe Express',
       title: 'AI editing &amp; <em>template browser.</em>',
       lead: 'Spent the summer on Adobe Express working on the AI editing surface and a redesigned template browser. Both shipped to GA.',
@@ -2394,6 +2398,7 @@
     },
     spotify: {
       meta: 'Personal · Data Viz',
+      wip: true,
       eyebrow: 'Six years of listening',
       title: 'A polar plot of <em>my</em> Spotify since \'19.',
       lead: 'Every dot is a song; angle is hour-of-day, distance is play count.',
@@ -2401,6 +2406,7 @@
     },
     essay: {
       meta: 'Misc · Mar 2026',
+      wip: true,
       eyebrow: 'Notes',
       title: 'On <em>designing for the seam</em> between data &amp; product.',
       lead: 'A working theory of why the dashboard era is ending and what comes next.',
@@ -2408,6 +2414,7 @@
     },
     chi: {
       meta: 'Research · CHI 2026',
+      wip: true,
       eyebrow: 'Co-author',
       title: 'Chart literacy in <em>dense dashboards.</em>',
       lead: 'Co-author with the UW Interactive Data Lab on a CHI 2026 paper studying how analysts decompose multi-chart dashboards under time pressure.',
@@ -2415,6 +2422,7 @@
     },
     daily: {
       meta: 'Type · ongoing',
+      wip: true,
       eyebrow: 'Daily practice',
       title: 'A <em>practice</em>, not a product.',
       lead: 'Most weekdays I make one small thing in motion or type — a typographic poster, a CSS animation, a 6-second loop.',
@@ -2422,6 +2430,7 @@
     },
     releases: {
       meta: 'SWE · npm',
+      wip: true,
       eyebrow: 'release-notes',
       title: 'A tiny library for <em>Linear-style</em> changelogs.',
       lead: 'A 2kb React component for rendering MDX changelogs that look like Linear\'s.',
@@ -2429,6 +2438,7 @@
     },
     birdbybird: {
       meta: 'Misc · book',
+      wip: true,
       eyebrow: 'On writing',
       title: 'Bird by Bird',
       lead: 'Anne Lamott\'s book on writing keeps showing up in how I think about shipping. The idea that you do the work one small, terrified bird at a time.',
@@ -2436,6 +2446,7 @@
     },
     envisioning: {
       meta: 'Data Viz · book',
+      wip: true,
       eyebrow: 'On information design',
       title: 'Envisioning Information',
       lead: 'Tufte. The grammar of dense, honest charts.',
@@ -2443,6 +2454,7 @@
     },
     years: {
       meta: 'Data Viz · audio',
+      wip: true,
       eyebrow: 'Bartholomäus Traubeck',
       title: '<em>Years.</em>',
       lead: 'A record made by playing a tree-trunk cross-section on a turntable. Each ring becomes a note. The original data viz I fell in love with.',
@@ -2450,6 +2462,7 @@
     },
     nightfeels: {
       meta: 'Misc · song',
+      wip: true,
       eyebrow: 'Blood Orange',
       title: '<em>night feels</em>',
       lead: 'On repeat for the last six months. The kind of song I put on when I want to keep working but stop optimizing.',
@@ -2575,6 +2588,12 @@
 
   function buildSheetHTML(p, srcEl) {
     let html = '';
+    if (p.wip) {
+      if (p.eyebrow) html += `<div class="eyebrow">${p.eyebrow}</div>`;
+      if (p.title)   html += `<h2>${p.title}</h2>`;
+      html += `<div class="cs-wip"><span class="cs-label">Coming soon</span><p class="cs-wip-text">Full writeup in progress.</p></div>`;
+      return html;
+    }
     if (p.custom) {
       if (p.eyebrow) html += `<div class="eyebrow">${p.eyebrow}</div>`;
       html += p.custom;
