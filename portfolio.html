@@ -11,14 +11,14 @@
 <style>
   /* ── Tokens ── */
   :root {
-    --paper:       oklch(0.965 0.004 70);
-    --paper-2:     oklch(0.93  0.005 70);
-    --ink:         oklch(0.18  0.005 70);
-    --ink-mid:     oklch(0.45  0.005 70);
-    --ink-low:     oklch(0.65  0.005 70);
-    --line:        oklch(0.88  0.005 70);
-    --control-soft:oklch(0.90  0.005 70);
-    --control-muted:oklch(0.50 0.005 70);
+    --paper:       oklch(0.965 0 0);
+    --paper-2:     oklch(0.93  0 0);
+    --ink:         oklch(0.18  0 0);
+    --ink-mid:     oklch(0.45  0 0);
+    --ink-low:     oklch(0.65  0 0);
+    --line:        oklch(0.88  0 0);
+    --control-soft:oklch(0.90  0 0);
+    --control-muted:oklch(0.50 0 0);
     --accent:      oklch(0.42  0.14  262);
     --accent-soft: oklch(0.93  0.035 262);
 
@@ -29,7 +29,7 @@
     --c-sage:    oklch(0.74 0.065 152);
     --c-plum:    oklch(0.63 0.09  305);
     --c-sand:    oklch(0.83 0.026 72);
-    --c-charcoal:oklch(0.20 0.008 60);
+    --c-charcoal:oklch(0.20 0 0);
 
     --serif: 'Instrument Serif', Georgia, serif;
     --sans:  'Inter', -apple-system, sans-serif;
@@ -48,19 +48,19 @@
     --rt-child-dur:   360ms;
     --rt-stagger-base: 60ms;
     --rt-stagger-step: 70ms;
-    --card-ink: oklch(0.18 0.005 70);
-    --card-muted: oklch(0.45 0.005 70);
-    --card-paper: oklch(0.965 0.004 70);
+    --card-ink: oklch(0.18 0 0);
+    --card-muted: oklch(0.45 0 0);
+    --card-paper: oklch(0.965 0 0);
   }
   [data-theme="dark"] {
-    --paper:       oklch(0.20  0.005 70);
-    --paper-2:     oklch(0.245 0.005 70);
-    --ink:         oklch(0.93  0.005 70);
-    --ink-mid:     oklch(0.58  0.005 70);
-    --ink-low:     oklch(0.42  0.005 70);
-    --line:        oklch(0.28  0.005 70);
-    --control-soft:oklch(0.30  0.005 70);
-    --control-muted:oklch(0.58 0.005 70);
+    --paper:       oklch(0.20  0 0);
+    --paper-2:     oklch(0.245 0 0);
+    --ink:         oklch(0.93  0 0);
+    --ink-mid:     oklch(0.58  0 0);
+    --ink-low:     oklch(0.42  0 0);
+    --line:        oklch(0.28  0 0);
+    --control-soft:oklch(0.30  0 0);
+    --control-muted:oklch(0.58 0 0);
     --accent-soft: oklch(0.24  0.06  262);
     --c-clay:    oklch(0.70 0.09  34);
     --c-blue:    oklch(0.52 0.12  243);
@@ -930,7 +930,7 @@
     will-change: left, top;
   }
   #site-cursor.is-visible { opacity: 1; }
-  #site-cursor.is-hover { width: 20px; height: 20px; }
+  #site-cursor.is-hover { width: 24px; height: 24px; }
   #site-cursor.is-on-blue { background: oklch(0.97 0 0); }
   #site-cursor.is-pill {
     width: 120px;
