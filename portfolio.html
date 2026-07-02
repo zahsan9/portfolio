@@ -209,8 +209,7 @@
   }
   .contact-nav a:hover,
   .contact-nav a:focus-visible { color: var(--ink); }
-  .topbar-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .maintenance-notice { margin: 0; font-family: var(--sans); font-size: 11px; color: var(--ink-low); }
+  .maintenance-notice { position: absolute; bottom: 6px; right: 36px; margin: 0; font-family: var(--sans); font-size: 10px; color: var(--ink-low); letter-spacing: 0.01em; }
   .theme-btn {
     width: 48px; height: 48px; border-radius: 50%;
     display: grid; place-items: center;
@@ -929,7 +928,7 @@
       opacity 120ms var(--ease-out),
       min-width 480ms var(--ease-soft),
       max-width 480ms var(--ease-soft),
-      height 480ms var(--ease-soft),
+      height 220ms var(--ease-out),
       padding 480ms var(--ease-soft),
       background 180ms var(--ease-out),
       color 320ms var(--ease-soft);
@@ -1789,16 +1788,14 @@
 
     <!-- Top bar -->
     <header class="topbar">
-      <div class="topbar-right">
-        <nav class="contact-nav" aria-label="Contact links">
-          <a href="mailto:zahsan9@uw.edu">Email</a>
-          <span class="contact-sep" aria-hidden="true">/</span>
-          <a href="https://www.linkedin.com/in/ahsanzainab" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <span class="contact-sep" aria-hidden="true">/</span>
-          <a href="https://github.com/zahsan9" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </nav>
-        <p class="maintenance-notice">*Site under maintenance, July 2026</p>
-      </div>
+      <nav class="contact-nav" aria-label="Contact links">
+        <a href="mailto:zahsan9@uw.edu">Email</a>
+        <span class="contact-sep" aria-hidden="true">/</span>
+        <a href="https://www.linkedin.com/in/ahsanzainab" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <span class="contact-sep" aria-hidden="true">/</span>
+        <a href="https://github.com/zahsan9" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="maintenance-notice" aria-hidden="true">*Under maintenance — July 2026</p>
     </header>
 
     <!-- ═══ FEED VIEW ═══ -->
