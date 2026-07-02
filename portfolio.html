@@ -3063,20 +3063,10 @@ function setRoute(name) {
     cursor.setAttribute('aria-hidden', 'true');
     document.body.appendChild(cursor);
 
-    let raf = 0, x = 0, y = 0, cx = 0, cy = 0;
-
-    function tick() {
-      cx += (x - cx) * 0.45;
-      cy += (y - cy) * 0.45;
-      cursor.style.left = cx + 'px';
-      cursor.style.top  = cy + 'px';
-      raf = (Math.abs(x - cx) > 0.1 || Math.abs(y - cy) > 0.1) ? requestAnimationFrame(tick) : 0;
-    }
-
     document.addEventListener('mousemove', e => {
-      x = e.clientX; y = e.clientY;
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
       cursor.classList.add('is-visible');
-      if (!raf) raf = requestAnimationFrame(tick);
     });
 
     document.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'));
