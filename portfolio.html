@@ -641,7 +641,7 @@
     font-family: var(--mono); font-size: 10px;
     text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.78;
   }
-  .pin .pill {
+  .pin .pill, .ab-stack-card .pill {
     font-family: var(--mono); font-size: 10px;
     background: oklch(1 0 0 / 0.14); color: inherit;
     padding: 5px 9px; border-radius: 999px;
@@ -1088,13 +1088,17 @@
   .ab-stack {
     --stack-w: clamp(320px, 45vw, 440px);
     --stack-peek: clamp(94px, 9vw, 112px);
+    --stack-tilt: 4deg;
     --stack-dur: 540ms;
+    --hinge-below: 0px;
     position: relative;
-    width: min(calc(var(--stack-w) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek)), 100% - 48px);
-    height: clamp(455px, 59vw, 585px);
+    /* Sized to the front card only — the fanned cards behind it rotate outward
+       from the shared hinge and are free to overflow; centering the box on the
+       front card's own footprint is what keeps the whole deck anchored to it. */
+    width: min(var(--stack-w), 100% - 48px);
+    height: calc(var(--stack-w) * 5 / 4);
     margin: 0 auto;
     perspective: 1200px;
-    transform: translate(clamp(-90px, -4vw, -44px), 34px);
   }
   .ab-stack-card {
     position: absolute;
@@ -1109,12 +1113,13 @@
     cursor: default;
     overflow: hidden;
     box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.08);
+    /* Fan pivots around one shared hinge below the deck, so rest is pure rotation
+       and every card sweeps the same clean arc — see .ab-stack transform-origin. */
     transform:
-      translateX(var(--stack-x, 0px))
       translateY(var(--lift-y, 0px))
       scale(var(--stack-scale, 1))
       rotate(calc(var(--stack-r, 0deg) + var(--hover-r, 0deg)));
-    transform-origin: 50% 100%;
+    transform-origin: 50% calc(100% + var(--hinge-below));
     transition:
       transform var(--stack-dur) cubic-bezier(0.22, 0.61, 0.36, 1),
       box-shadow var(--stack-dur) ease;
@@ -1131,18 +1136,17 @@
   .ab-stack.is-busy .ab-stack-card:not(.is-lifting):not(.is-placing) {
     pointer-events: none;
   }
-  .ab-stack.is-loading .ab-stack-card {
-    transform:
-      translateX(var(--stack-load-x, var(--stack-x, 0px)))
-      translateY(28px)
-      scale(0.94)
-      rotate(0deg);
-    transition: none;
-    box-shadow: 0 18px 40px -30px oklch(0.08 0.005 60 / 0.5), inset 0 0 0 1px oklch(0 0 0 / 0.08);
+  @keyframes cardSpread {
+    from { transform: rotate(var(--intro-start, 0deg)); }
+    to   { transform: rotate(var(--stack-r, 0deg)); }
+  }
+  .ab-stack-card.is-intro {
+    animation: cardSpread 0.95s cubic-bezier(0.32, 0.02, 0.22, 1) backwards;
+    animation-delay: var(--intro-delay, 0s);
   }
   .ab-stack-card.is-lifting {
-    --lift-y: -56px;
-    --stack-scale: 1.045;
+    --lift-y: -48px;
+    --stack-scale: 1.04;
     z-index: 3000;
     transition:
       transform 250ms cubic-bezier(0.36, 0, 0.2, 1),
@@ -1154,16 +1158,19 @@
     --stack-scale: 1;
     z-index: 3000;
     transition:
-      transform 560ms cubic-bezier(0.18, 0.72, 0.28, 1.06),
-      box-shadow 560ms ease;
+      transform 540ms cubic-bezier(0.18, 0.72, 0.28, 1.05),
+      box-shadow 540ms ease;
   }
   .ab-stack-card:not(.is-front) {
     cursor: pointer;
   }
-  .ab-stack:not(.is-busy) .ab-stack-card:not(.is-front):hover,
+  .ab-stack:not(.is-busy) .ab-stack-card.is-hovered,
   .ab-stack:not(.is-busy) .ab-stack-card:not(.is-front):focus-visible {
-    --lift-y: -14px;
-    --hover-r: -2deg;
+    --lift-y: -16px;
+    --hover-r: -1.5deg;
+    transition:
+      transform 260ms cubic-bezier(0.34, 1.18, 0.64, 1),
+      box-shadow 260ms ease;
     box-shadow: 0 22px 54px -34px oklch(0.08 0.005 60 / 0.64), inset 0 0 0 1px oklch(0 0 0 / 0.08);
   }
   .ab-stack-header {
@@ -1184,6 +1191,24 @@
     line-height: 1; letter-spacing: -0.03em;
   }
   .ab-stack-unit { font-size: 18px; letter-spacing: -0.01em; }
+  .ab-stack-list {
+    list-style: none; margin: 4px 0 0; padding: 0;
+    display: flex; flex-direction: column; gap: 11px;
+  }
+  .ab-stack-list li {
+    font-family: var(--sans); font-size: 13px; line-height: 1.5;
+    opacity: 0.86; padding-left: 15px; position: relative;
+  }
+  .ab-stack-list li::before {
+    content: '—'; position: absolute; left: 0; opacity: 0.5;
+  }
+  .ab-stack-quote {
+    font-family: var(--sans); font-size: 14px; font-style: italic;
+    line-height: 1.6; opacity: 0.88; margin: 4px 0 0;
+  }
+  .ab-stack-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  }
   .ab-stack-body { margin-top: auto; }
   .ab-stack-detail {
     font-family: var(--mono); font-size: 10px;
@@ -1696,9 +1721,8 @@
     .ab-stack {
       --stack-w: min(66vw, 285px);
       --stack-peek: 56px;
-      width: min(calc(var(--stack-w) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek) + var(--stack-peek)), 100% - 32px);
-      height: min(96vw, 400px);
-      transform: translateY(18px);
+      width: min(var(--stack-w), 100% - 32px);
+      height: calc(var(--stack-w) * 5 / 4);
     }
 .cs-two-col,
     .cs-artifact-grid,
@@ -1825,7 +1849,7 @@
         <article class="pin" data-cat="viz" data-page="climate" data-year="2026">
           <div class="art art-yellow ar-45">
             <div class="pin-meta">Case Study</div>
-            <h3>22% neutral.</h3>
+            <h3>ESD Family Survey:<br>Neutral Response.</h3>
           </div>
         </article>
 
@@ -1897,13 +1921,18 @@
     <section class="page about-page" id="aboutView">
       <div class="ab-stack">
         <div class="ab-stack-card art-blue" role="button" tabindex="0">
-          <div class="ab-stack-tab" aria-hidden="true"><span>Metro Accessibility</span></div>
+          <div class="ab-stack-tab" aria-hidden="true"><span>Currently</span></div>
           <div class="ab-stack-header">
-            <div class="ab-card-eyebrow">Metro Accessibility</div>
-            <div class="ab-stack-stat">−42<span class="ab-stack-unit">%</span></div>
+            <div class="ab-card-eyebrow">Currently</div>
+            <ul class="ab-stack-list">
+              <li>Data storytelling &amp; analytics at GoDaddy</li>
+              <li>Studying CS + Data Science at UW</li>
+              <li>Building this portfolio</li>
+              <li>Exploring design engineering &amp; frontend</li>
+            </ul>
           </div>
           <div class="ab-stack-body">
-            <div class="ab-stack-detail">Trip-planning time reduction for blind riders. Re-routed Metro transit for screen-reader navigation.</div>
+            <div class="ab-stack-detail">A live snapshot — kept short, kept updated</div>
           </div>
         </div>
 
@@ -1922,46 +1951,51 @@
         </div>
 
         <div class="ab-stack-card art-yellow" role="button" tabindex="0">
-          <div class="ab-stack-tab" aria-hidden="true"><span>WIIRED Studio</span></div>
+          <div class="ab-stack-tab" aria-hidden="true"><span>How I Work</span></div>
           <div class="ab-stack-header">
-            <div class="ab-card-eyebrow">WIIRED Studio · Co-founder</div>
-            <div class="ab-stack-stat">12<span class="ab-stack-unit"> clients</span></div>
+            <div class="ab-card-eyebrow">How I Work</div>
+            <ul class="ab-stack-list">
+              <li>I turn ambiguity into a plan.</li>
+              <li>I care about the reasoning behind a solution, not just the output.</li>
+              <li>I connect technical details to the people using them.</li>
+              <li>I notice what's missing, and take ownership of it.</li>
+            </ul>
           </div>
           <div class="ab-stack-body">
-            <div class="ab-stack-detail">Brand systems + web apps. Design engineering for startups and studios.</div>
+            <div class="ab-stack-detail">Instincts, not a resume line</div>
           </div>
         </div>
 
         <div class="ab-stack-card art-sage" role="button" tabindex="0">
-          <div class="ab-stack-tab" aria-hidden="true"><span>Data Visualization</span></div>
+          <div class="ab-stack-tab" aria-hidden="true"><span>How I Use AI</span></div>
           <div class="ab-stack-header">
-            <div class="ab-card-eyebrow">Data Visualization</div>
-            <div class="ab-stack-title">CHI '26 · UW IDL.</div>
+            <div class="ab-card-eyebrow">How I Use AI</div>
+            <p class="ab-stack-quote">I use AI as a thinking partner, not an autopilot. It helps me explore directions, challenge assumptions, and automate repetitive work — moving messy ideas to a clearer start. I still own the understanding, the refining, and the result.</p>
+            <div class="ab-stack-tags">
+              <span class="pill">Explore</span>
+              <span class="pill">Challenge</span>
+              <span class="pill">Automate</span>
+            </div>
           </div>
           <div class="ab-stack-body">
-            <div class="ab-stack-detail">Chart literacy research with Prof. Jeff Heer at the UW Interactive Data Lab.</div>
+            <div class="ab-stack-detail">Judgment, not enthusiasm for its own sake</div>
           </div>
         </div>
 
         <div class="ab-stack-card art-clay" role="button" tabindex="0">
-          <div class="ab-stack-tab" aria-hidden="true"><span>Product Design</span></div>
+          <div class="ab-stack-tab" aria-hidden="true"><span>The Human Part</span></div>
           <div class="ab-stack-header">
-            <div class="ab-card-eyebrow">Product Design</div>
-            <div class="ab-stack-stat">14<span class="ab-stack-unit"> interviews</span></div>
+            <div class="ab-card-eyebrow">The Human Part</div>
+            <div class="ab-stack-tags">
+              <span class="pill">Shawarma</span>
+              <span class="pill">Movies</span>
+              <span class="pill">Student orgs</span>
+              <span class="pill">Design inspo</span>
+              <span class="pill">People I love</span>
+            </div>
           </div>
           <div class="ab-stack-body">
-            <div class="ab-stack-detail">End-to-end research across 3 usability rounds.</div>
-          </div>
-        </div>
-
-        <div class="ab-stack-card art-plum" role="button" tabindex="0">
-          <div class="ab-stack-tab" aria-hidden="true"><span>Currently</span></div>
-          <div class="ab-stack-header">
-            <div class="ab-card-eyebrow">Currently</div>
-            <div class="ab-stack-title">Seattle, WA.</div>
-          </div>
-          <div class="ab-stack-body">
-            <div class="ab-stack-detail">CS + DS @ UW · Summer '26</div>
+            <div class="ab-stack-detail">Yes, there's a life outside the editor</div>
           </div>
         </div>
 
@@ -2714,31 +2748,45 @@
     let aboutOrder = [1, 0, ...aboutCards.map((_, i) => i).filter(i => i > 1)];
     let aboutStackBusy = false;
     let aboutStackMetrics = null;
+    let aboutHoverLeaveTimer = null;
+
+    // Fanned cards are overlapping rotated rectangles, so their edges don't meet
+    // cleanly — crossing that seam fires rapid enter/leave pairs. A short grace
+    // period on leave (cancelled by the next enter) absorbs that noise instead
+    // of letting the lift animation flicker back and forth.
+    function setAboutHovered(card) {
+      if (aboutHoverLeaveTimer) {
+        clearTimeout(aboutHoverLeaveTimer);
+        aboutHoverLeaveTimer = null;
+      }
+      aboutCards.forEach(c => { if (c !== card) c.classList.remove('is-hovered'); });
+      if (card) card.classList.add('is-hovered');
+    }
 
     function measureAboutStack() {
       const styles = getComputedStyle(aboutStack);
       const peek = parseFloat(styles.getPropertyValue('--stack-peek')) || 48;
-      const stackW = aboutStack.clientWidth;
-      const cardW = aboutCards[0]?.offsetWidth || 0;
-      const fanBalance = ((aboutCards.length - 1) * peek) / 2;
-      const baseX = Math.max(0, ((stackW - cardW) / 2) - fanBalance);
-      return { peek, baseX };
+      const tilt = parseFloat(styles.getPropertyValue('--stack-tilt')) || 4;
+      const cardH = aboutCards[0]?.offsetHeight || 0;
+      // One shared hinge below the deck: every card pivots around the same point,
+      // so the resting fan is pure rotation and each card sweeps the same clean arc.
+      const rad = tilt * Math.PI / 180;
+      const radius = peek / Math.sin(rad);
+      const hingeBelow = Math.max(0, radius - cardH / 2);
+      return { tilt, hingeBelow };
     }
 
     function renderAboutStack({ freezeMetrics = false } = {}) {
       if (!freezeMetrics || !aboutStackMetrics) {
         aboutStackMetrics = measureAboutStack();
       }
-      const { peek, baseX } = aboutStackMetrics;
-      const tilts = [0, -2.5, 2, -1.5, 2.5, -2];
+      const { tilt, hingeBelow } = aboutStackMetrics;
+      aboutStack.style.setProperty('--hinge-below', `${hingeBelow}px`);
       aboutCards.forEach((card, i) => {
         const depth = aboutOrder.indexOf(i);
         const isFront = depth === 0;
-        const rotation = tilts[depth] ?? 0;
-        const x = baseX + depth * peek;
+        const rotation = depth * tilt;
         card.style.setProperty('--depth', depth);
-        card.style.setProperty('--stack-x', `${x}px`);
-        card.style.setProperty('--stack-load-x', `${baseX}px`);
         card.style.setProperty('--stack-r', `${rotation}deg`);
         card.style.setProperty('--stack-z', aboutCards.length - depth);
         card.classList.toggle('is-front', isFront);
@@ -2755,15 +2803,18 @@
 
       aboutStackBusy = true;
       aboutStackMetrics = measureAboutStack();
+      setAboutHovered(null);
       const card = aboutCards[index];
+      const depth = aboutOrder.indexOf(index);
+      const angle = depth * aboutStackMetrics.tilt;
       aboutStack.classList.add('is-busy');
-      card.style.setProperty('--stack-r', '-2.5deg');
+      // lift the card up off the fan along its own axis, keeping half its resting tilt
+      card.style.setProperty('--stack-r', `${angle * 0.5}deg`);
       card.classList.add('is-lifting', 'is-revealing');
 
       setTimeout(() => {
         aboutOrder = nextOrder;
         renderAboutStack({ freezeMetrics: true });
-        card.style.setProperty('--stack-r', '0deg');
         card.classList.remove('is-lifting');
         card.classList.add('is-placing');
       }, 250);
@@ -2780,6 +2831,17 @@
 
     aboutCards.forEach((card, index) => {
       card.addEventListener('click', () => selectAboutCard(index));
+      card.addEventListener('mouseenter', () => {
+        if (aboutStackBusy || card.classList.contains('is-front')) return;
+        setAboutHovered(card);
+      });
+      card.addEventListener('mouseleave', () => {
+        if (aboutHoverLeaveTimer) clearTimeout(aboutHoverLeaveTimer);
+        aboutHoverLeaveTimer = setTimeout(() => {
+          card.classList.remove('is-hovered');
+          aboutHoverLeaveTimer = null;
+        }, 70);
+      });
       card.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -2797,12 +2859,23 @@
     playAboutStackIntro = () => {
       if (aboutStackBusy) return;
       aboutStackMetrics = null;
-      aboutStack.classList.add('is-loading');
       renderAboutStack();
-      void aboutStack.offsetWidth;
-      requestAnimationFrame(() => {
-        aboutStack.classList.remove('is-loading');
+      const { tilt } = aboutStackMetrics;
+      const maxAngle = (aboutCards.length - 1) * tilt;
+      // cards start bunched at the anchored (rightmost) angle, then unfurl by
+      // rotating around the shared hinge down to their resting slots — one clean
+      // arc per card, staggered so the fan opens like a hand of cards.
+      aboutCards.forEach((card, i) => {
+        const depth = aboutOrder.indexOf(i);
+        card.style.setProperty('--intro-start', `${(maxAngle - depth * 0.8).toFixed(2)}deg`);
+        card.style.setProperty('--intro-delay', `${(0.15 + depth * 0.045).toFixed(3)}s`);
+        card.classList.add('is-intro');
       });
+      void aboutStack.offsetWidth;
+      const totalMs = (0.15 + (aboutCards.length - 1) * 0.045) * 1000 + 950;
+      setTimeout(() => {
+        aboutCards.forEach(card => card.classList.remove('is-intro'));
+      }, totalMs);
     };
     window.addEventListener('resize', () => {
       refreshAboutStack();
