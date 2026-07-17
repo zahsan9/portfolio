@@ -1084,6 +1084,36 @@
   }
   .ab-principle:last-child { border-bottom: none; padding-bottom: 0; }
 
+  /* ── About page row (intro panel + stack) ── */
+  .ab-page-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(34px, 5vw, 72px);
+    width: 100%;
+  }
+  .ab-intro-panel {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+    color: var(--ink);
+    margin-right: 10px;
+  }
+  .ab-intro-panel h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 54px);
+    line-height: 0.98;
+    max-width: 8ch;
+    text-align: center;
+  }
+  .ab-intro-panel h3 em { font-style: italic; color: inherit; }
+  .ab-arrow { width: 84px; height: 44px; flex: 0 0 auto; }
+  .ab-arrow svg { width: 100%; height: 100%; display: block; }
+
   /* ── About stack ── */
   .ab-stack {
     --stack-w: clamp(320px, 45vw, 440px);
@@ -1094,10 +1124,15 @@
     position: relative;
     /* Sized to the front card only — the fanned cards behind it rotate outward
        from the shared hinge and are free to overflow; centering the box on the
-       front card's own footprint is what keeps the whole deck anchored to it. */
+       front card's own footprint is what keeps the whole deck anchored to it.
+       The intro panel to the left (.ab-intro-panel) fills the space the fan's
+       rightward tail would otherwise leave empty. But flex only knows this
+       box's own width, not the tail overflowing past it — so the margin-right
+       below reserves roughly that overflow, letting .ab-page-row's centering
+       balance the *visual* composition instead of just this card's footprint. */
     width: min(var(--stack-w), 100% - 48px);
     height: calc(var(--stack-w) * 5 / 4);
-    margin: 0 auto;
+    margin: 0 calc(var(--stack-peek) * 3) 0 0;
     perspective: 1200px;
   }
   .ab-stack-card {
@@ -1166,8 +1201,11 @@
   .ab-stack-card:not(.is-front) {
     cursor: pointer;
   }
-  .ab-stack:not(.is-busy) .ab-stack-card.is-hovered,
-  .ab-stack:not(.is-busy) .ab-stack-card:not(.is-front):focus-visible {
+  /* Lift is driven solely by is-hovered (a single JS-owned state, see setAboutHovered),
+     not also by :focus-visible — otherwise a keyboard-focused card and a mouse-hovered
+     card can be two different elements, lifting both at once. Keyboard focus still gets
+     its own indicator from the global :focus-visible outline rule above. */
+  .ab-stack:not(.is-busy) .ab-stack-card.is-hovered {
     --lift-y: -16px;
     --hover-r: -1.5deg;
     transition:
@@ -1716,6 +1754,12 @@
     .topbar { padding: 14px 18px; }
     .banner h1 { font-size: 46px; }
     .exp-card { flex-basis: 260px; }
+    /* Not enough width for intro panel + fan side by side — stack the panel
+       above and point the arrow down into the deck instead of across at it. */
+    .ab-page-row { flex-direction: column; gap: 20px; }
+    .ab-arrow { width: 38px; height: 70px; transform: rotate(90deg); }
+    .ab-intro-panel { margin-right: 0; }
+    .ab-stack { margin: 0; }
   }
   @media (max-width: 600px) {
     .exp-track { padding: 0 20px; }
@@ -1920,6 +1964,15 @@
 
     <!-- ═══ ABOUT PAGE ═══ -->
     <section class="page about-page" id="aboutView">
+      <div class="ab-page-row">
+        <div class="ab-intro-panel">
+          <h3>A little<br><em>about me</em></h3>
+          <div class="ab-arrow" aria-hidden="true">
+            <svg viewBox="0 0 84 44" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 22H76M58 6l18 16-18 16"/>
+            </svg>
+          </div>
+        </div>
       <div class="ab-stack">
         <div class="ab-stack-card art-blue" role="button" tabindex="0">
           <div class="ab-stack-tab" aria-hidden="true"><span>Currently</span></div>
@@ -1944,7 +1997,7 @@
               <img src="img_0612.jpg" alt="Zainab Ahsan" style="width:100%;height:100%;object-fit:cover;object-position:50% 18%;transform:scale(1.45);">
             </div>
             <div style="margin-top:auto;padding-bottom:28px;">
-              <div class="ab-stack-title"><strong>Hi, I'm</strong><br><strong><em style="font-size:1.15em;">Zainab!</em></strong></div>
+              <div class="ab-stack-title">Hi, I'm<br><em style="font-size:1.15em;">Zainab!</em></div>
               <p style="font-family:var(--sans);font-size:13px;line-height:1.65;opacity:0.75;margin-top:12px;">I'm a third-year Computer Science student at the University of Washington. I enjoy making software that people might find genuinely useful: transit tools for blind riders, equity dashboards for schools, and interfaces my studio clients ship to real users. I like to design things, then build them. Let's build something together!</p>
             </div>
           </div>
@@ -2002,6 +2055,7 @@
           </div>
         </div>
 
+      </div>
       </div>
 
     </section>
