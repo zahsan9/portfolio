@@ -1032,16 +1032,6 @@
   .about-page .page-body { max-width: 560px; margin: 0 auto; text-align: center; }
 
   /* ── About page ── */
-  .ab-bento-photo { padding: 20px; background: var(--paper-2); display: flex; align-items: center; justify-content: center; }
-  .ab-bento-photo img {
-    width: 100%; aspect-ratio: 1;
-    object-fit: cover; object-position: center 20%;
-    border-radius: 999px;
-    transform: rotate(3deg);
-    transform-origin: center 40%;
-    transition: transform var(--motion-med) var(--ease-out);
-  }
-  .ab-bento-photo:hover img { transform: rotate(1deg); }
   .ab-bio {
     font-size: 15px; line-height: 1.65; color: var(--ink-mid); margin-bottom: 0;
   }
@@ -2164,48 +2154,6 @@
   }, { passive: true });
 
   const PAGES = {
-    about: {
-      meta: 'About',
-      wip: true,
-      eyebrow: '',
-      custom: `
-        <div class="cs-wip"><span class="cs-label">In progress</span><p class="cs-wip-text">More coming soon.</p></div>
-        <div class="ab-bento" style="margin: 28px 0 0; max-width: none;">
-          <div class="ab-bento-card ab-bento-1 ab-bento-photo">
-            <img src="profile.jpg" alt="Zainab Ahsan">
-          </div>
-          <div class="ab-bento-card ab-bento-2 art-blue">
-            <div class="ab-card-eyebrow">Re-routing Metro for blind commuters</div>
-            <div class="ab-card-stat" style="font-size:48px;">−42<span class="ab-card-unit">%</span></div>
-            <div class="ab-card-sub">Trip-planning time reduction, blind riders</div>
-          </div>
-          <div class="ab-bento-card ab-bento-3 art-charcoal">
-            <div class="ab-card-eyebrow">Front-end Engineering</div>
-            <h3 class="ab-card-title">I build<br>what I design.</h3>
-            <div class="ab-card-sub">React · Next.js · TypeScript · D3</div>
-          </div>
-          <div class="ab-bento-card ab-bento-4 art-yellow">
-            <div class="ab-card-eyebrow">WIIRED Studio · Co-founder</div>
-            <div class="ab-card-stat">12<span class="ab-card-unit"> clients</span></div>
-          </div>
-          <div class="ab-bento-card ab-bento-5 art-sage">
-            <div class="ab-card-eyebrow">Data Visualization</div>
-            <h3 class="ab-card-title">CHI '26 · UW IDL.</h3>
-            <div class="ab-card-sub">Chart literacy research w/ Prof. Jeff Heer</div>
-          </div>
-          <div class="ab-bento-card ab-bento-6 art-clay">
-            <div class="ab-card-eyebrow">Product Design</div>
-            <div class="ab-card-stat">14<span class="ab-card-unit"> interviews</span></div>
-            <div class="ab-card-sub">3 usability rounds · end-to-end</div>
-          </div>
-          <div class="ab-bento-card ab-bento-7 art-plum">
-            <div class="ab-card-eyebrow">Currently</div>
-            <h3 class="ab-card-title">Seattle,<br>WA.</h3>
-            <div class="ab-card-sub">CS + DS @ UW · Summer '26</div>
-          </div>
-        </div>
-      `
-    },
     metro: {
       meta: 'UX · 2025',
       wip: true,
