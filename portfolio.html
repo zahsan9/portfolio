@@ -2849,10 +2849,11 @@
 
     function selectAboutCard(index) {
       if (aboutStackBusy) return;
-      const front = aboutOrder[0];
-      const nextOrder = index === front
-        ? [...aboutOrder.slice(1), front]
-        : [index, ...aboutOrder.filter(i => i !== index)];
+      // The front card isn't a control — it's just the current state — so tapping
+      // it does nothing, matching its own cursor (only non-front cards get the
+      // pointer cursor; see .ab-stack-card:not(.is-front) below).
+      if (index === aboutOrder[0]) return;
+      const nextOrder = [index, ...aboutOrder.filter(i => i !== index)];
 
       aboutStackBusy = true;
       aboutStackMetrics = measureAboutStack();
