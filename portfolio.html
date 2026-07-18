@@ -895,6 +895,30 @@
     text-transform: uppercase;
     opacity: 0.7;
   }
+  .exp-tech-icon { position: absolute; }
+  .exp-tech-icon img { display: block; width: 100%; height: 100%; }
+  .exp-tech-label {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 8px);
+    transform: translateY(-50%) translateX(6px);
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: oklch(0.15 0.01 60 / 0.92);
+    color: oklch(0.96 0.005 80);
+    padding: 4px 10px;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+  .exp-tech-icon:hover .exp-tech-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
   .exp-card-header { display: flex; justify-content: space-between; align-items: baseline; }
   .exp-link-card:focus-visible {
     outline-color: currentColor;
@@ -2079,6 +2103,26 @@
                 </div>
               </div>
               <article class="exp-card art-yellow">
+                <div class="exp-tech-icon" style="top:20px;right:25.5px;width:25px;height:25px;">
+                  <img src="python-logo.png" alt="Python">
+                  <span class="exp-tech-label">Python</span>
+                </div>
+                <div class="exp-tech-icon" style="top:51px;right:22.5px;width:31px;height:31px;">
+                  <img src="sql-logo.png" alt="SQL">
+                  <span class="exp-tech-label" style="right:calc(100% + 2.9px);">SQL</span>
+                </div>
+                <div class="exp-tech-icon" style="top:88px;right:26px;width:24px;height:24px;">
+                  <img src="claude-logo.png" alt="Claude" style="border-radius:5px;">
+                  <span class="exp-tech-label">Claude Code</span>
+                </div>
+                <div class="exp-tech-icon" style="top:122px;right:26px;width:24px;height:24px;">
+                  <img src="quicksight-logo.png" alt="QuickSight">
+                  <span class="exp-tech-label">Amazon QuickSight</span>
+                </div>
+                <div class="exp-tech-icon" style="top:152px;right:20px;width:36px;height:36px;">
+                  <img src="redshift-logo.png" alt="Redshift">
+                  <span class="exp-tech-label" style="right:calc(100% + 0.8px);">Amazon Redshift</span>
+                </div>
                 <div class="yr">Jun 2026 – Present</div>
                 <h3>GoDaddy<span>Data Analytics Intern</span></h3>
                 <ul>
