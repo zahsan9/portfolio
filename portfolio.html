@@ -895,6 +895,7 @@
     text-transform: uppercase;
     opacity: 0.7;
   }
+  .exp-tech-zone { position: absolute; }
   .exp-tech-icon { position: absolute; }
   .exp-tech-icon img { display: block; width: 100%; height: 100%; }
   .exp-tech-label {
@@ -2133,6 +2134,20 @@
                 <div class="place">Internship</div>
               </article>
               <article class="exp-card art-sage exp-link-card" role="link" tabindex="0" aria-label="Open WIIRED Studio on Instagram" data-cursor-link="↗︎ @wiiredstudio" data-href="https://www.instagram.com/wiiredstudio/">
+                <div class="exp-tech-zone" style="top:0;right:0;width:78px;height:140px;">
+                  <div class="exp-tech-icon" style="top:20px;right:18px;width:40px;height:40px;">
+                    <img src="figma-logo.png" alt="Figma">
+                    <span class="exp-tech-label" style="right:calc(100%);">Figma + MCP</span>
+                  </div>
+                  <div class="exp-tech-icon" style="top:62px;right:26px;width:24px;height:24px;">
+                    <img src="claude-logo.png" alt="Claude" style="border-radius:5px;">
+                    <span class="exp-tech-label">Claude Code + Design</span>
+                  </div>
+                  <div class="exp-tech-icon" style="top:96px;right:26px;width:24px;height:24px;">
+                    <img src="canva-logo.png" alt="Canva">
+                    <span class="exp-tech-label">Canva</span>
+                  </div>
+                </div>
                 <div class="exp-card-header">
                   <div class="yr">Apr 2026 – Present</div>
                 </div>
@@ -3294,6 +3309,22 @@ function setRoute(name) {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         e.preventDefault();
         window.open(card.dataset.href, '_blank', 'noopener,noreferrer');
+      });
+    });
+
+    // Tech icon corner inside pill cards reverts to the regular active cursor
+    document.querySelectorAll('[data-cursor-link] .exp-tech-zone').forEach(zone => {
+      zone.addEventListener('mouseenter', () => {
+        cursor.textContent = '';
+        cursor.classList.remove('is-pill');
+        cursor.classList.add('is-hover');
+      });
+      zone.addEventListener('mouseleave', () => {
+        const card = zone.closest('[data-cursor-link]');
+        cursor.classList.remove('is-hover');
+        if (!card) return;
+        cursor.textContent = card.dataset.cursorLink;
+        cursor.classList.add('is-pill');
       });
     });
 
