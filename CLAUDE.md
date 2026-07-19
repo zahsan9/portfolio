@@ -78,3 +78,30 @@ End-of-scroll: `endHold = viewport.clientHeight * 0.55` — a buffer where the c
 | `exp-` | Experience timeline components |
 | `art-*` | Feed card color variants (`art-clay`, `art-sage`, `art-charcoal`, etc.) |
 | `pin` | Feed card (`.pin`, `.pin-active`, `.pin-meta`, `.sub`) |
+
+---
+
+## Case study writing guidelines
+
+Applies to any `PAGES[key].custom` write-up (the `cs-` component system). `PAGES.climate` (ESD Family Survey) is the reference implementation — copy its structure for new case studies. These rules come from how design-hiring reviewers actually read portfolios: they spend 3-5 minutes per case study (some reject in 30 seconds), and they're grading decision quality and measurable outcomes, not process narration.
+
+### Structure, in order
+
+1. **`cs-hero` title** — states the finding or twist, not just the project name ("What 22% Neutral Hid.", not "Neutral Response Analysis"). `cs-hero-sub` tells the whole story in 1-2 sentences: context → tension → what you built.
+2. **`cs-role-line`** — Solo/Team, client, year. This sets the "I" vs "we" frame for everything below it (see Rules).
+3. **Scale numbers** — fold 1-2 real scale figures into the `cs-hero-sub` sentence itself ("a climate survey of ~6,000 families across 35+ schools") rather than adding a separate `cs-stat-row` block. `cs-hero-sub` + `cs-role-line` is already two stacked pieces under the title; a third block (stat row) reads as cluttered. Reserve `cs-stat-row` for heroes that have no `cs-role-line` (see the WIIRED hero) — never stack both.
+4. **"The Question"** (`cs-section` + `cs-question` + `cs-copy`) — the problem, framed as a real ambiguity, plus the constraint that made it hard (data scale, conflicting audiences, a deadline).
+5. **"Data + Approach"** (`cs-two-col` / `cs-feature`) — source and transforms, 2-4 sentences each. This is the *only* section where methods belong — don't repeat tool/technique names elsewhere.
+6. **"Design Decisions"** (`cs-decision-block`, numbered, 3-5 of them) — each one names the option considered, why it was rejected, and the insight that drove the final call. Insight over technique: never state a choice ("used a treemap") without the reason ("bar chart implies false equivalence between a 30- and 900-respondent school").
+7. **"Impact"** (`cs-impact-callout`) — lead with the sharpest *true* outcome. Use `cs-impact-n` when a real metric exists. When it doesn't, don't invent one — `cs-impact-line` should still name a concrete, verifiable event (sent, shipped, adopted), never something that didn't actually happen. A missing or vague impact line is the single most common rejection reason in the research this is based on, but a fabricated one is worse — get the facts from the user rather than inventing specifics (meetings, presentations, collaboration) that sound plausible.
+8. **"What I'd Change"** (`cs-learnings`) — keep this in every case study. Specific self-critique (name the exact chart, the exact tradeoff) reads more senior than a project with no acknowledged flaws.
+
+### Rules
+
+- **Never invent facts** — collaboration stories, meetings, stakeholder feedback, prototypes, or outcomes that didn't happen. If the real story isn't known, ask before writing it in. This applies even when the invented version would score better against the checklist above — an honest, modest case study beats a fabricated impressive one.
+- **"I" vs "we"** — `cs-role-line` sets the frame. If it says Solo, the whole write-up uses "I." Collaborators get named with their role; "we" only for decisions genuinely made together.
+- **No method-dumping** — tool/technique names belong only in "Data + Approach." Every other section states an insight or a decision.
+- **No screenshot without context** — every `cs-preview-frame` / `cs-decision-fig` needs a `cs-caption` that states the finding the image proves, not just a figure sitting alone.
+- **Scale over safety** — lead with what made the problem hard; don't bury a real constraint (respondent count, edge cases, conflicting stakeholders) in a middle paragraph.
+- **2-3 finished case studies, not more** — everything else stays `wip: true` (renders the "Coming soon" state). A placeholder reads better than a rushed write-up.
+- **Reads as a talk** — the section order above is the talk order: hook, question, decisions with reasoning, impact, reflection. Amazon-style loops expect this to work presented out loud, not just skimmed.
