@@ -112,6 +112,15 @@
   }
   .main { height: 100vh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
   .main::-webkit-scrollbar { display: none; }
+  .copyright {
+    position: fixed;
+    right: 20px; bottom: 14px;
+    font-size: 11px; letter-spacing: 0.01em;
+    color: var(--ink-low);
+    pointer-events: none;
+    z-index: 40;
+    user-select: none;
+  }
   /* Custom feed scrollbar — slides with the sheet */
   .feed-scroll-track {
     position: fixed;
@@ -1869,6 +1878,8 @@
 <body>
 
 <div class="app">
+
+  <div class="copyright" aria-hidden="true">© 2026 Zainab Ahsan</div>
 
   <!-- Left rail -->
   <aside class="rail">
