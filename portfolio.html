@@ -85,9 +85,7 @@
       background 520ms var(--ease-soft),
       color 520ms var(--ease-soft),
       border-color 520ms var(--ease-soft),
-      box-shadow 520ms var(--ease-soft),
-      fill 520ms var(--ease-soft),
-      stroke 520ms var(--ease-soft) !important;
+      box-shadow 520ms var(--ease-soft) !important;
   }
   html.theme-transitioning .theme-btn svg {
     opacity: 0.55;
@@ -2672,7 +2670,7 @@
     requestAnimationFrame(resetTabsTransform);
   }
 
-  function flipPins(classAction, { srcEl, activeEl } = {}) {
+  function flipPins(classAction, { srcEl, activeEl, restoreScrollTop } = {}) {
     const visiblePins = pins.filter(p => !p.classList.contains('is-hidden'));
     const first = new Map();
     visiblePins.forEach(p => first.set(p, p.getBoundingClientRect()));
@@ -2681,7 +2679,9 @@
     void feed.offsetWidth;
     // Settle scroll before capturing LAST so both snapshots share stable coordinates
     const maxScroll = main.scrollHeight - main.clientHeight;
-    if (srcEl) {
+    if (typeof restoreScrollTop === 'number') {
+      main.scrollTop = Math.max(0, Math.min(maxScroll, restoreScrollTop));
+    } else if (srcEl) {
       const r = srcEl.getBoundingClientRect();
       main.scrollTop = Math.max(0, Math.min(maxScroll,
         main.scrollTop + r.top + r.height * 0.5 - main.clientHeight * 0.5));
@@ -2746,6 +2746,7 @@
   }
 
   let switchSheetTimer = null;
+  let feedScrollBeforeOpen = 0;
 
   function openSheet(key, srcEl) {
     const p = PAGES[key]; if (!p) return;
@@ -2771,6 +2772,7 @@
 
     clearTimeout(closeSheetTimer);
     cancelAnimationFrame(scrollTweenFrame);
+    feedScrollBeforeOpen = main.scrollTop;
     const tabsBefore = tabsEl.getBoundingClientRect();
     sheet.dataset.page = key;
     sheetMeta.textContent = p.meta || '';
@@ -2803,7 +2805,7 @@
       feedEl.classList.remove('has-open');
       document.querySelectorAll('.pin').forEach(p => p.classList.remove('pin-active'));
       resetFeedPosition();
-      flipPins(() => appEl.classList.remove('sheet-open'), { activeEl: active });
+      flipPins(() => appEl.classList.remove('sheet-open'), { restoreScrollTop: feedScrollBeforeOpen });
       animateTabsToNormal(tabsBefore);
     });
     closeSheetTimer = setTimeout(() => {
@@ -3295,10 +3297,17 @@ function setRoute(name) {
     cursor.setAttribute('aria-hidden', 'true');
     document.body.appendChild(cursor);
 
+    let cursorX = 0, cursorY = 0, cursorFrame = 0;
+    function paintCursor() {
+      cursorFrame = 0;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top  = cursorY + 'px';
+    }
     document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
+      cursorX = e.clientX;
+      cursorY = e.clientY;
       cursor.classList.add('is-visible');
+      if (!cursorFrame) cursorFrame = requestAnimationFrame(paintCursor);
     });
 
     document.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'));
